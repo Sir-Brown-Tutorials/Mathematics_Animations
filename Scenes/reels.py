@@ -121,9 +121,9 @@ class ExpandExpression(Scene):
         my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
 
         # Load and position logo image
-        logo = ImageMobject("../Images/logo.png")
-        logo_corner = logo.scale(0.15)
-        logo_corner.to_corner(DR, buff=-0.2)
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.2)
+        logo_corner.to_corner(DR, buff=-0.1)
         self.add(logo_corner)
 
         # Problem Statement
@@ -235,7 +235,7 @@ class ExpandExpression(Scene):
         )
         self.wait()
         self.play(
-            logo_corner.animate.move_to(ORIGIN).scale(3),
+            logo_corner.animate.move_to(ORIGIN).scale(5),
             final_text.animate.to_edge(DOWN).set_color(WHITE).scale(1.3),
         )
         self.wait()
@@ -255,20 +255,16 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Expand and Simplify", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Solve for", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .to_edge(UP)
         )
         # Subtitle
-        subtitle = (
-            Text("Using multiplication Grid", font="Roboto", weight=BOLD, color=WHITE)
-            .scale(1.5)
-            .next_to(title, DOWN, buff=0.3)
-        )
+        subtitle = Tex(r"$p$ \text{and} $q$").scale(1.5).next_to(title, DOWN, buff=0.3)
 
         # Formula
         formula = (
-            MathTex(r"(4x - 3)(4x + 3)", color=WHITE)
+            MathTex(r"\frac{32^4 \times 625^4}{8^6 \times 25^4} = 2^p5^q", color=WHITE)
             .scale(1.7)
             .next_to(subtitle, DOWN, buff=1)
         )
