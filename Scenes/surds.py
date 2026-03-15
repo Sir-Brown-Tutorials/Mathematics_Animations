@@ -16,9 +16,9 @@ class RationalisingSurds(Scene):
         my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
 
         # Load and position logo image
-        logo = ImageMobject("../Images/logo.png")
-        logo_corner = logo.scale(0.15)
-        logo_corner.to_corner(DR, buff=-0.2)
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.25)
+        logo_corner.to_corner(DR, buff=-0.1)
         self.add(logo_corner)
 
         # Problem Statement
@@ -103,29 +103,33 @@ class RationalisingSurds(Scene):
             start=columns[1][1][0][0].get_left(),
             end=columns[0][1].get_right(),
             buff=0.1,
-            stroke_width=3,
+            stroke_width=2,
             color=BLUE,
+            tip_length=0.15,
         )
         arrow_2 = Arrow(
             start=columns[1][1][0][-1].get_right(),
             end=columns[2][1].get_left(),
             buff=0.1,
-            stroke_width=3,
+            stroke_width=2,
             color=BLUE,
+            tip_length=0.15,
         )
         arrow_3 = Arrow(
             start=columns[0][4].get_right(),
             end=columns[1][2][0][0].get_left(),
             buff=0.1,
-            stroke_width=3,
+            stroke_width=2,
             color=GREEN,
+            tip_length=0.15,
         )
         arrow_4 = Arrow(
             start=columns[2][4].get_left(),
             end=columns[1][2][0][-1].get_right(),
             buff=0.1,
-            stroke_width=3,
+            stroke_width=2,
             color=GREEN,
+            tip_length=0.15,
         )
 
         arrow_group = VGroup(arrow_1, arrow_2, arrow_3, arrow_4)
@@ -136,6 +140,7 @@ class RationalisingSurds(Scene):
             angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         c_arrow_22 = CurvedArrow(
             columns[0][1][1].get_top(),
@@ -143,6 +148,7 @@ class RationalisingSurds(Scene):
             angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         c_arrow_23 = CurvedArrow(
             columns[0][1][2].get_top(),
@@ -150,6 +156,7 @@ class RationalisingSurds(Scene):
             angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         c_arrow_24 = CurvedArrow(
             columns[0][1][2].get_top(),
@@ -157,39 +164,46 @@ class RationalisingSurds(Scene):
             angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         # Expanding Denominator curved arrows
         c_arrow_31 = CurvedArrow(
             columns[2][1][1].get_top(),
             columns[2][1][4].get_top(),
-            angle=PI / 4,
+            angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         c_arrow_32 = CurvedArrow(
             columns[2][1][1].get_top(),
             columns[2][1][5].get_top(),
-            angle=PI / 4,
+            angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         c_arrow_33 = CurvedArrow(
             columns[2][1][2].get_top(),
             columns[2][1][4].get_top(),
-            angle=PI / 4,
+            angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         c_arrow_34 = CurvedArrow(
             columns[2][1][2].get_top(),
             columns[2][1][5].get_top(),
-            angle=PI / 4,
+            angle=-PI / 4,
             stroke_width=2,
             color=YELLOW_B,
+            tip_length=0.15,
         )
         c_arrow_2_group = VGroup(c_arrow_21, c_arrow_22, c_arrow_23, c_arrow_24)
         c_arrow_3_group = VGroup(c_arrow_31, c_arrow_32, c_arrow_33, c_arrow_34)
-        final_solution_box = SurroundingRectangle(columns[1][2], color=BROWN1, buff=0.3)
+        final_solution_box = SurroundingRectangle(
+            columns[1][2], color=BROWN1, buff=0.3, corner_radius=1, stroke_width=1
+        )
 
         self.play(Write(problem), run_time=3)
         self.wait(2)
@@ -230,7 +244,7 @@ class RationalisingSurds(Scene):
         )
         self.wait()
         self.play(
-            logo_corner.animate.move_to(ORIGIN).scale(3),
+            logo_corner.animate.move_to(ORIGIN).scale(5),
             final_text.animate.to_edge(DOWN).set_color(WHITE).scale(1.3),
         )
         self.wait()
