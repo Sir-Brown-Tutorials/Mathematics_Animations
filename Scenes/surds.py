@@ -104,7 +104,7 @@ class RationalisingSurds(Scene):
             end=columns[0][1].get_right(),
             buff=0.1,
             stroke_width=2,
-            color=BLUE,
+            color=YELLOW_B,
             tip_length=0.15,
         )
         arrow_2 = Arrow(
@@ -112,7 +112,7 @@ class RationalisingSurds(Scene):
             end=columns[2][1].get_left(),
             buff=0.1,
             stroke_width=2,
-            color=BLUE,
+            color=YELLOW_B,
             tip_length=0.15,
         )
         arrow_3 = Arrow(
@@ -120,7 +120,7 @@ class RationalisingSurds(Scene):
             end=columns[1][2][0][0].get_left(),
             buff=0.1,
             stroke_width=2,
-            color=GREEN,
+            color=YELLOW_B,
             tip_length=0.15,
         )
         arrow_4 = Arrow(
@@ -128,7 +128,7 @@ class RationalisingSurds(Scene):
             end=columns[1][2][0][-1].get_right(),
             buff=0.1,
             stroke_width=2,
-            color=GREEN,
+            color=YELLOW_B,
             tip_length=0.15,
         )
 
@@ -139,7 +139,7 @@ class RationalisingSurds(Scene):
             columns[0][1][4].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_GREEN,
             tip_length=0.15,
         )
         c_arrow_22 = CurvedArrow(
@@ -147,7 +147,7 @@ class RationalisingSurds(Scene):
             columns[0][1][5].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_GREEN,
             tip_length=0.15,
         )
         c_arrow_23 = CurvedArrow(
@@ -155,7 +155,7 @@ class RationalisingSurds(Scene):
             columns[0][1][4].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_BLUE,
             tip_length=0.15,
         )
         c_arrow_24 = CurvedArrow(
@@ -163,7 +163,7 @@ class RationalisingSurds(Scene):
             columns[0][1][5].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_BLUE,
             tip_length=0.15,
         )
         # Expanding Denominator curved arrows
@@ -172,7 +172,7 @@ class RationalisingSurds(Scene):
             columns[2][1][4].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_GREEN,
             tip_length=0.15,
         )
         c_arrow_32 = CurvedArrow(
@@ -180,7 +180,7 @@ class RationalisingSurds(Scene):
             columns[2][1][5].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_GREEN,
             tip_length=0.15,
         )
         c_arrow_33 = CurvedArrow(
@@ -188,7 +188,7 @@ class RationalisingSurds(Scene):
             columns[2][1][4].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_BLUE,
             tip_length=0.15,
         )
         c_arrow_34 = CurvedArrow(
@@ -196,13 +196,13 @@ class RationalisingSurds(Scene):
             columns[2][1][5].get_top(),
             angle=-PI / 4,
             stroke_width=2,
-            color=YELLOW_B,
+            color=PURE_BLUE,
             tip_length=0.15,
         )
         c_arrow_2_group = VGroup(c_arrow_21, c_arrow_22, c_arrow_23, c_arrow_24)
         c_arrow_3_group = VGroup(c_arrow_31, c_arrow_32, c_arrow_33, c_arrow_34)
         final_solution_box = SurroundingRectangle(
-            columns[1][2], color=BROWN1, buff=0.3, corner_radius=1, stroke_width=1
+            columns[1][2], color=BROWN1, buff=0.3, corner_radius=0.2, stroke_width=1.5
         )
 
         self.play(Write(problem), run_time=3)
