@@ -38,7 +38,7 @@ class RationalisingSurds(Scene):
                     r"\frac{(\sqrt{5}-3\sqrt{3})(2\sqrt{3}-\sqrt{5})}"
                     r"{(2\sqrt{3}+\sqrt{5})(2\sqrt{3}-\sqrt{5})}"
                 ),
-                MathTex(r"\frac{5\sqrt{15} - 23}{7}"),
+                MathTex(r"\frac{5\sqrt{15} - 23}" r"{7}"),
             )
             .arrange(DOWN, buff=1.5)
             .scale(0.7)
@@ -213,12 +213,30 @@ class RationalisingSurds(Scene):
         self.wait(2)
         self.play(Transform(conjugate, columns[1][1]))
         self.wait(2)
+
+        self.play(Write(columns[0][0]))
+        self.wait()
+        self.play(FadeIn(columns[0][1]), Create(arrow_group[0]))
+        self.wait()
+        self.play(Create(c_arrow_2_group[0]), Write(columns[0][2][0]))
+        self.wait()
+        self.play(Create(c_arrow_2_group[1]), Write(columns[0][2][1]))
+        self.wait()
+        self.play(Create(c_arrow_2_group[2]), Write(columns[0][2][2]))
+        self.wait()
+        self.play(Create(c_arrow_2_group[3]), Write(columns[0][2][3]))
+        self.wait()
+        self.play(FadeIn(columns[0][3:]))
+        self.wait()
+
+        self.play(Write(columns[2][0]))
+        self.wait()
+        self.play(FadeIn(arrow_group[1], columns[2][1:]))
+        self.wait()
+        self.play(Create(arrow_group[2]), FadeIn(columns[1][2]), Create(arrow_group[3]))
+        self.wait()
         self.play(
             FadeIn(
-                columns[1][2],
-                columns[0],
-                columns[2],
-                arrow_group,
                 c_arrow_2_group,
                 c_arrow_3_group,
                 final_solution_box,
