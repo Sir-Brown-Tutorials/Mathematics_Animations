@@ -225,3 +225,4 @@ work_shop.py
 lazygit
 *.ipynb
 lab.py
+.idea/
