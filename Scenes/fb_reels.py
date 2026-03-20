@@ -334,7 +334,7 @@ class Thumbnail(Scene):
 
         # Formula
         formula = (
-            MathTex(r"g(x) = \frac{2\sqrt{x}}{3}", color=WHITE)
+            MathTex(r"g(x) = \frac{2\sqrt{x}}{3} + 1", color=WHITE)
             .scale(1.7)
             .next_to(subtitle, DOWN, buff=1)
         )
