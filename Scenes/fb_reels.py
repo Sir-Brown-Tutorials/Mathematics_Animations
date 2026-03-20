@@ -311,6 +311,108 @@ class DomainRange(Scene):
         self.play(FadeOut(final_text, logo_corner))
 
 
+class VectorSubtraction(Scene):
+    def construct(self):
+        # Create a custom Latex template that includes the cancel package
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # Load and position logo image
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.2)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # Problem Statement
+        problem_statement = Tex(
+            r"Given that \\[1em] $\vec{a} = \begin{pmatrix} 2 \\[1em] 6 \end{pmatrix}$ and $\vec{b} = \begin{pmatrix} -8 \\[1em] 3 \end{pmatrix}$, \\[1em]"
+            r"find the value of \\[1em] $\frac{1}{2}(\vec{a} - \vec{b})$."
+        )
+        problem = (
+            Tex(r"Subtration of Vectors").to_edge(UP).scale(1.2).set_color(YELLOW_D)
+        )
+        underline = Underline(problem)
+        problem_group = VGroup(problem, underline)
+        eq_group = VGroup(
+            MathTex(
+                r"\vec{a} = \begin{pmatrix} 2 \\[1em] 6 \end{pmatrix}",
+                r"\qquad",
+                r"\vec{b} = \begin{pmatrix} -8 \\[1em] 3 \end{pmatrix}",
+            ),
+            Tex(r"Find $\frac{1}{2}(\vec{a} - \vec{b})$"),
+            MathTex(r"\vec{a} - \vec{b}"),
+            MathTex(
+                r"\vec{a} - \vec{b} = \begin{pmatrix} 2 \\[1em] 6 \end{pmatrix} - \begin{pmatrix} -8 \\[1em] 3 \end{pmatrix}"
+            ),
+            MathTex(r"\vec{a} - \vec{b} = \begin{pmatrix} 10 \\[1em] 3 \end{pmatrix}"),
+            MathTex(
+                r"\frac{1}{2}(\vec{a} - \vec{b}) = \frac{1}{2}\begin{pmatrix} 10 \\[1em] 3 \end{pmatrix}"
+            ),
+            MathTex(r"\begin{pmatrix} 5 \\[1em] \frac{3}{2} \end{pmatrix}"),
+        ).arrange(DOWN, buff=0.5)
+        rectangle_box = SurroundingRectangle(
+            eq_group[6], buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+
+        cancel_1 = MathTex(
+            r"\vec{a} - \vec{b} = \begin{pmatrix} 2 & - & (-8) \\[1em] 6 & - & 3 \end{pmatrix}",
+        )
+        cancel_1.move_to(eq_group[3])
+        cancel_2 = MathTex(
+            r"\frac{1}{2}(\vec{a} - \vec{b}) = \begin{pmatrix} 5 \\[1em] \frac{3}{2} \end{pmatrix}"
+        )
+        cancel_2.move_to(eq_group[5])
+
+        self.play(Write(problem_statement))
+        self.wait(2)
+        self.play(Transform(problem_statement, problem_group))
+        self.wait(2)
+        self.play(Write(eq_group[0]))
+        self.wait(2)
+        self.play(Write(eq_group[1]))
+        self.wait(2)
+        self.play(Write(eq_group[2]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[2], eq_group[3]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group[3], cancel_1))
+        self.wait(2)
+        self.play(TransformFromCopy(cancel_1, eq_group[4]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[4], eq_group[5]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group[5], cancel_2))
+        self.wait(2)
+        self.play(TransformFromCopy(cancel_2, eq_group[6]))
+        self.wait(2)
+        self.play(Create(rectangle_box))
+        self.wait(7)
+
+        # Outro
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    problem_statement,
+                    eq_group,
+                    rectangle_box,
+                    cancel_1,
+                    cancel_2,
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
 # Thumbnail
 class Thumbnail(Scene):
     def construct(self):
@@ -323,19 +425,20 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Calculate", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Subtration", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = (
-            Tex(r"\text{Domain given Range}").scale(1.5).next_to(title, DOWN, buff=0.3)
-        )
+        subtitle = Tex(r"\text{of Vectors}").scale(1.5).next_to(title, DOWN, buff=0.3)
 
         # Formula
         formula = (
-            MathTex(r"g(x) = \frac{2\sqrt{x}}{3} + 1", color=WHITE)
-            .scale(1.7)
+            MathTex(
+                r"\frac{1}{2}(\vec{a} - \vec{b}) = \frac{1}{2}\left(\begin{pmatrix} 2 \\[1em] 6 \end{pmatrix} - \begin{pmatrix} -8 \\[1em] 3 \end{pmatrix}\right)",
+                color=WHITE,
+            )
+            .scale(1)
             .next_to(subtitle, DOWN, buff=1)
         )
 
