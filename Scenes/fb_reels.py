@@ -181,6 +181,136 @@ class QuadraticEquation(Scene):
         self.play(FadeOut(final_text, logo_corner))
 
 
+class DomainRange(Scene):
+    def construct(self):
+        # Create a custom Latex template that includes the cancel package
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # Load and position logo image
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.2)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # Problem Statement
+        problem_statement = Tex(
+            r"Given that \\[1em] $g(x) = \frac{2\sqrt{x}}{3} + 1$, \\[1em] calculate the domain when \\[0.5em] the range is $6$"
+        )
+        problem = (
+            Tex(r"Calculate Domain given Range")
+            .to_edge(UP)
+            .scale(1.2)
+            .set_color(YELLOW_D)
+        )
+        underline = Underline(problem)
+        problem_group = VGroup(problem, underline)
+        eq_group = VGroup(
+            MathTex(r"g(x) = \frac{2\sqrt{x}}{3} + 1"),
+            Tex(r"Range (Output) is $6$"),
+            MathTex(r"g(x) = 6"),
+            MathTex(r"\Downarrow"),
+            MathTex(r"6 = \frac{2\sqrt{x}}{3} + 1"),
+            MathTex(r"6 - 1 = \frac{2\sqrt{x}}{3} + 1 - 1"),
+            MathTex(r"5 \times 3 = \frac{2\sqrt{x}}{3} \times 3"),
+            MathTex(r"\frac{5}{2} = \frac{2\sqrt{x}}{2}"),
+            MathTex(r"(\sqrt{x})^2 = \left(\frac{5}{2}\right)^2"),
+        ).arrange(DOWN, buff=0.5)
+        cancel_1 = MathTex(
+            r"5 = \frac{2\sqrt{x}}{3}",
+        )
+        cancel_1.move_to(eq_group[5])
+        cancel_2 = MathTex(
+            r"5 = \frac{2\sqrt{x}}{\cancel{3}} \times \cancel{3}",
+            tex_template=my_template,
+        )
+        cancel_2.move_to(eq_group[6])
+        cancel_3 = MathTex(r"5 = 2\sqrt{x}")
+        cancel_3.move_to(eq_group[6])
+        cancel_4 = MathTex(
+            r"\frac{5}{2} = \frac{\cancel{2}\sqrt{x}}{\cancel{2}",
+            tex_template=my_template,
+        )
+        cancel_4.move_to(eq_group[7])
+        cancel_5 = MathTex(r"\sqrt{x} = \frac{5}{2}")
+        cancel_5.move_to(eq_group[7])
+        cancel_6 = MathTex(r"x = \frac{225}{4}")
+        cancel_6.move_to(eq_group[8])
+        cancel_7 = MathTex(r"x = 56.25")
+        cancel_7.move_to(eq_group[8])
+        rectangle_box = SurroundingRectangle(
+            cancel_7, buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+
+        self.play(Write(problem_statement))
+        self.wait(2)
+        self.play(Transform(problem_statement, problem_group))
+        self.wait(2)
+        self.play(Write(eq_group[0]))
+        self.wait(2)
+        self.play(Write(eq_group[1]))
+        self.wait(2)
+        self.play(Write(eq_group[2]))
+        self.wait(2)
+        self.play(Create(eq_group[3]))
+        self.wait(2)
+        self.play(Write(eq_group[4]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[4], eq_group[5]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group[5], cancel_1))
+        self.wait(2)
+        self.play(TransformFromCopy(cancel_1, eq_group[6]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group[6], cancel_2))
+        self.wait(2)
+        self.play(ReplacementTransform(cancel_2, cancel_3))
+        self.wait(2)
+        self.play(TransformFromCopy(cancel_3, eq_group[7]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group[7], cancel_4))
+        self.wait(2)
+        self.play(ReplacementTransform(cancel_4, cancel_5))
+        self.wait(2)
+        self.play(TransformFromCopy(cancel_5, eq_group[8]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group[8], cancel_6))
+        self.wait(2)
+        self.play(ReplacementTransform(cancel_6, cancel_7))
+        self.wait(2)
+        self.play(Create(rectangle_box))
+        self.wait(7)
+
+        # Outro
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    problem_statement,
+                    eq_group,
+                    rectangle_box,
+                    cancel_1,
+                    cancel_2,
+                    cancel_3,
+                    cancel_4,
+                    cancel_5,
+                    cancel_6,
+                    cancel_7,
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
 # Thumbnail
 class Thumbnail(Scene):
     def construct(self):
@@ -193,16 +323,18 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Solve", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Calculate", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = Tex(r"\text{the equation}").scale(1.5).next_to(title, DOWN, buff=0.3)
+        subtitle = (
+            Tex(r"\text{Domain given Range}").scale(1.5).next_to(title, DOWN, buff=0.3)
+        )
 
         # Formula
         formula = (
-            MathTex(r"3x^2 + 6x - 2 = 0", color=WHITE)
+            MathTex(r"g(x) = \frac{2\sqrt{x}}{3}", color=WHITE)
             .scale(1.7)
             .next_to(subtitle, DOWN, buff=1)
         )
