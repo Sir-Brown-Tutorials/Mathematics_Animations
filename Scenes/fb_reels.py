@@ -413,6 +413,128 @@ class VectorSubtraction(Scene):
         self.play(FadeOut(final_text, logo_corner))
 
 
+class Quadratic_1(Scene):
+    def construct(self):
+        # Create a custom Latex template that includes the cancel package
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # Load and position logo image
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.2)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # Problem Statement
+        problem_statement = Tex(
+            r"Factorise completely \\[1em] $10 + 8m - 24m^2$"
+        ).scale(1.35)
+        problem = (
+            Tex(r"Factorise $10 + 8m - 24m^2$")
+            .to_edge(UP)
+            .scale(1.35)
+            .set_color(YELLOW_D)
+        )
+        underline = Underline(problem)
+        problem_group = VGroup(problem, underline)
+        eq_group = (
+            VGroup(
+                MathTex(r"10 + 8m - 24m^2"),
+                MathTex(r"\Downarrow"),
+                MathTex(r"-24m^2 + 8m + 10"),
+                MathTex(r"-2", r"(", r"12m^2 - 4m - 5", r")"),
+                MathTex(r"12m^2 - 4m - 5"),
+                MathTex(r"12m^2 - 10m", r"+ 6m - 5"),
+                MathTex(r"(12m^2 - 10m)", r"+(6m - 5)"),
+                MathTex(r"2m", r"(6m - 5)", r"+1", r"(6m- 5)"),
+                MathTex(r"(2m + 1)", r"(6m - 5)"),
+                MathTex(r"-2", r"(2m + 1)", r"(6m - 5)"),
+            )
+            .arrange(DOWN, buff=0.6)
+            .scale(1.2)
+        )
+        rectangle_box = SurroundingRectangle(
+            eq_group[9], buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+        box_1 = SurroundingRectangle(eq_group[3][0])
+
+        # cancel_1 = MathTex(
+        #    r"\frac{20}{4} = \frac{\cancel{4}k}{\cancel{4}}",
+        #   tex_template=my_template,
+        # )
+        # cancel_1.move_to(eq_group[10])
+        # cancel_2 = MathTex(
+        #    r"\frac{1}{2}(\vec{a} - \vec{b}) = \begin{pmatrix} 5 \\[1em] \frac{3}{2} \end{pmatrix}"
+        # )
+        # cancel_2.move_to(eq_group[5])
+
+        self.play(Write(problem_statement))
+        self.wait(2)
+        self.play(Transform(problem_statement, problem_group))
+        self.wait(2)
+        self.play(Write(eq_group[0]))
+        self.wait(2)
+        self.play(Create(eq_group[1]))
+        self.wait(2)
+        self.play(Write(eq_group[2]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[2], eq_group[3]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[3][2], eq_group[4]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[4], eq_group[5]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[5][0], eq_group[6][0]))
+        self.wait()
+        self.play(TransformFromCopy(eq_group[5][-1], eq_group[6][1]))
+        self.wait()
+        self.play(TransformFromCopy(eq_group[6][0], eq_group[7][:2]))
+        self.wait()
+        self.play(TransformFromCopy(eq_group[6][1], eq_group[7][-2:]))
+        self.wait()
+        self.play(
+            TransformFromCopy(VGroup(eq_group[7][0], eq_group[7][2]), eq_group[8][0])
+        )
+        self.wait()
+        self.play(
+            TransformFromCopy(VGroup(eq_group[7][1], eq_group[7][3]), eq_group[8][1])
+        )
+        self.wait()
+        self.play(Create(box_1))
+        self.wait()
+        self.play(TransformFromCopy(eq_group[3][0], eq_group[9][0]), FadeOut(box_1))
+        self.wait()
+        self.play(TransformFromCopy(eq_group[8][0], eq_group[9][1]))
+        self.wait()
+        self.play(TransformFromCopy(eq_group[8][-1], eq_group[9][2]))
+        self.wait(2)
+        self.play(Create(rectangle_box))
+        self.wait(7)
+
+        # Outro
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    problem_statement,
+                    eq_group,
+                    rectangle_box,
+                    # cancel_1,
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
 class Polynomial(Scene):
     def construct(self):
         # Create a custom Latex template that includes the cancel package
@@ -536,22 +658,20 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Calculate", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Factorise", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = (
-            Tex(r"\text{the value of} $k$").scale(1.5).next_to(title, DOWN, buff=0.3)
-        )
+        subtitle = Tex(r"\text{completely}").scale(1.5).next_to(title, DOWN, buff=0.3)
 
         # Formula
         formula = (
             MathTex(
-                r"f(x) = x^3 + 5x^2 - 4x + k = 5k",
+                r"10 + 8m - 24m^2",
                 color=WHITE,
             )
-            .scale(1.3)
+            .scale(1.5)
             .next_to(subtitle, DOWN, buff=1)
         )
 
