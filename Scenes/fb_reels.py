@@ -646,6 +646,137 @@ class Polynomial(Scene):
         self.play(FadeOut(final_text, logo_corner))
 
 
+class Matrix_1(Scene):
+    def construct(self):
+        # Create a custom Latex template that includes the cancel package
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # Load and position logo image
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.2)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # Problem Statement
+        problem_statement = Tex(
+            r"Given that \\[1em] $A = \begin{bmatrix} 3 & 15 \\ 9 & 12 \end{bmatrix}$ and $B = \begin{bmatrix} 1 & 3 \\ 4 & -2 \end{bmatrix}$,",
+            r"\\[1em] find \\[0.5em] $\frac{1}{3}A - B^2$",
+        )
+        problem = (
+            Tex(r"Matrix Calculations").to_edge(UP).scale(1.2).set_color(PURE_YELLOW)
+        )
+        underline = Underline(problem)
+        problem_group = VGroup(problem, underline)
+
+        eq_group_1 = (
+            VGroup(
+                Tex(
+                    r"$A = \begin{bmatrix} 3 & 15 \\ 9 & 12 \end{bmatrix}$, \qquad"
+                    r"$B = \begin{bmatrix} 1 & 3 \\ 4 & -2 \end{bmatrix}$"
+                ),
+                Tex(r"find $\frac{1}{3}A - B^2$"),
+            )
+            .arrange(DOWN, buff=0.5)
+            .next_to(problem_group, DOWN * 2)
+        )
+
+        eq_group_2 = (
+            VGroup(
+                Tex(r"1. Compute $\mathbf{\frac{1}{3}A}$").set_color(YELLOW_B),
+                MathTex(
+                    r"\frac{1}{3}A = \frac{1}{3}\begin{bmatrix} 3 & 15 \\ 9 & 12 \end{bmatrix}"
+                ),
+            )
+            .arrange(DOWN, buff=0.5)
+            .next_to(eq_group_1, DOWN * 3)
+        )
+
+        eq_group_3 = (
+            VGroup(
+                Tex(r"2. Compute $\mathbf{B^2}$").set_color(YELLOW_B),
+                MathTex(r"B^2 = B \times B"),
+            )
+            .arrange(DOWN, buff=0.5)
+            .next_to(eq_group_2, DOWN * 3)
+        )
+
+        eq_group_4 = (
+            VGroup(
+                Tex(r"1. Compute $\mathbf{\frac{1}{3}A - B^2}$").set_color(YELLOW_B),
+                MathTex(
+                    r"\frac{1}{3}A - B^2 = \begin{bmatrix} 1 & 6 \\ 3 & 4 \end{bmatrix} - \begin{bmatrix} 13 & -3 \\ -4 & 16 \end{bmatrix}"
+                ),
+            )
+            .arrange(DOWN, buff=0.5)
+            .next_to(eq_group_3, DOWN * 3)
+        )
+        #  cancel_1 = MathTex(
+        #   r"5 = \frac{2\sqrt{x}}{3}",
+        # )
+        # cancel_1.move_to(eq_group[5])
+        # cancel_2 = MathTex(
+        #   r"5 = \frac{2\sqrt{x}}{\cancel{3}} \times \cancel{3}",
+        #   tex_template=my_template,
+        # )
+        # cancel_2.move_to(eq_group[6])
+        # cancel_3 = MathTex(r"5 = 2\sqrt{x}")
+        # cancel_3.move_to(eq_group[6])
+        # cancel_4 = MathTex(
+        #    r"\frac{5}{2} = \frac{\cancel{2}\sqrt{x}}{\cancel{2}",
+        #    tex_template=my_template,
+        # )
+        # cancel_4.move_to(eq_group[7])
+        # cancel_5 = MathTex(r"\sqrt{x} = \frac{5}{2}")
+        # cancel_5.move_to(eq_group[7])
+        # cancel_6 = MathTex(r"x = \frac{225}{4}")
+        # cancel_6.move_to(eq_group[8])
+        # cancel_7 = MathTex(r"x = 56.25")
+        # cancel_7.move_to(eq_group[8])
+        # rectangle_box = SurroundingRectangle(
+        #    cancel_7, buff=0.2, color=PURE_RED, corner_radius=0.2
+        # )
+
+        self.play(Write(problem_statement))
+        self.wait(2)
+        self.play(Transform(problem_statement, problem_group))
+        self.wait(2)
+        self.play(FadeIn(eq_group_1, eq_group_2, eq_group_4, eq_group_3))
+        self.wait(2)
+
+        # Outro
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    problem_statement,
+                    eq_group_1,
+                    eq_group_2,
+                    eq_group_3,
+                    eq_group_4,
+                    #                     """  rectangle_box,
+                    #                     {value for value in iterable if condition}ancel_1,
+                    #                     cancel_2,
+                    #                     cancel_3,
+                    #                     cancel_4,
+                    #                     cancel_5,
+                    #                     cancel_6,
+                    #                     cancel_7,""",
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
 # Thumbnail
 class Thumbnail(Scene):
     def construct(self):
