@@ -687,7 +687,8 @@ class Matrix_1(Scene):
             VGroup(
                 Tex(r"1. Compute $\mathbf{\frac{1}{3}A}$").set_color(YELLOW_B),
                 MathTex(
-                    r"\frac{1}{3}A = \frac{1}{3}\begin{bmatrix} 3 & 15 \\ 9 & 12 \end{bmatrix}"
+                    r"\frac{1}{3}A = ",
+                    r"\frac{1}{3}\begin{bmatrix} 3 & 15 \\ 9 & 12 \end{bmatrix}",
                 ),
             )
             .arrange(DOWN, buff=0.5)
@@ -713,37 +714,54 @@ class Matrix_1(Scene):
             .arrange(DOWN, buff=0.5)
             .next_to(eq_group_3, DOWN * 3)
         )
-        #  cancel_1 = MathTex(
-        #   r"5 = \frac{2\sqrt{x}}{3}",
-        # )
-        # cancel_1.move_to(eq_group[5])
-        # cancel_2 = MathTex(
-        #   r"5 = \frac{2\sqrt{x}}{\cancel{3}} \times \cancel{3}",
-        #   tex_template=my_template,
-        # )
-        # cancel_2.move_to(eq_group[6])
-        # cancel_3 = MathTex(r"5 = 2\sqrt{x}")
-        # cancel_3.move_to(eq_group[6])
-        # cancel_4 = MathTex(
-        #    r"\frac{5}{2} = \frac{\cancel{2}\sqrt{x}}{\cancel{2}",
-        #    tex_template=my_template,
-        # )
-        # cancel_4.move_to(eq_group[7])
-        # cancel_5 = MathTex(r"\sqrt{x} = \frac{5}{2}")
-        # cancel_5.move_to(eq_group[7])
-        # cancel_6 = MathTex(r"x = \frac{225}{4}")
-        # cancel_6.move_to(eq_group[8])
-        # cancel_7 = MathTex(r"x = 56.25")
-        # cancel_7.move_to(eq_group[8])
-        # rectangle_box = SurroundingRectangle(
-        #    cancel_7, buff=0.2, color=PURE_RED, corner_radius=0.2
-        # )
+        sub_1 = MathTex(
+            r"\frac{1}{3}A = \begin{bmatrix} \frac{1}{3}(3) & \frac{1}{3}(15) \\[1em] \frac{1}{3}(9) & \frac{1}{3}(12) \end{bmatrix}",
+        )
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------
+        sub_1.move_to(eq_group_2[1])
+        sub_2 = MathTex(
+            r"\frac{1}{3}A = \begin{bmatrix} 1 & 6 \\ 3 & 4 \end{bmatrix}",
+        )
+        sub_2.move_to(eq_group_2[1])
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------
+        sub_3 = MathTex(
+            r"\begin{bmatrix} 1 & 3 \\ 4 & -2 \end{bmatrix} \times \begin{bmatrix} 1 & 3 \\ 4 & -2 \end{bmatrix}"
+        )
+        sub_3.move_to(eq_group_3[1])
+        sub_4 = MathTex(
+            r"\begin{bmatrix} 1(1)+3(4) & 1(3)+3(-2) \\ 4(1)+(-2)(4) & 4(3)+(-2)(-2) \end{bmatrix}",
+        )
+        sub_4.move_to(eq_group_3[1])
+        sub_5 = MathTex(r"\begin{bmatrix}1+12 & 3-6 \\ 4-8 & 12+4 \end{bmatrix}")
+        sub_5.move_to(eq_group_3[1])
+        sub_6 = MathTex(r"\begin{bmatrix} 13 & -3 \\ -4 & 16 \end{bmatrix}")
+        sub_6.move_to(eq_group_3[1])
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------
+        sub_7 = MathTex(r"\begin{bmatrix} 1-3 & 5-(-3) \\ 3-(-4) & 4-16 \end{bmatrix}")
+        sub_7.move_to(eq_group_4[1])
+        sub_8 = MathTex(r"\begin{bmatrix} -12 & 8 \\ 7 & -12 \end{bmatrix}")
+        sub_8.move_to(eq_group_4[1])
+        rectangle_box = SurroundingRectangle(
+            sub_8, buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
 
         self.play(Write(problem_statement))
         self.wait(2)
         self.play(Transform(problem_statement, problem_group))
         self.wait(2)
-        self.play(FadeIn(eq_group_1, eq_group_2, eq_group_4, eq_group_3))
+        self.play(Write(eq_group_1[0]))
+        self.wait(2)
+        self.play(Write(eq_group_1[1]))
+        self.wait(2)
+        self.play(Write(eq_group_2[0]))
+        self.wait(2)
+        self.play(Write(eq_group_2[1]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group_2[1], sub_1))
+        self.wait(2)
+        self.play(ReplacementTransform(sub_1, sub_2))
+        self.wait(2)
+        self.play(FadeIn(eq_group_3, eq_group_4))
         self.wait(2)
 
         # Outro
@@ -757,7 +775,7 @@ class Matrix_1(Scene):
                     eq_group_2,
                     eq_group_3,
                     eq_group_4,
-                    #                     """  rectangle_box,
+                    rectangle_box,
                     #                     {value for value in iterable if condition}ancel_1,
                     #                     cancel_2,
                     #                     cancel_3,
