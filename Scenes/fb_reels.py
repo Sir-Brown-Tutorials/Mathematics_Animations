@@ -688,7 +688,7 @@ class Matrix_1(Scene):
                 Tex(r"1. Compute $\mathbf{\frac{1}{3}A}$").set_color(YELLOW_B),
                 MathTex(
                     r"\frac{1}{3}A = ",
-                    r"\frac{1}{3}\begin{bmatrix} 3 & 15 \\ 9 & 12 \end{bmatrix}",
+                    r"\frac{1}{3}\begin{bmatrix} 3 & 15 \\[1em] 9 & 12 \end{bmatrix}",
                 ),
             )
             .arrange(DOWN, buff=0.5)
@@ -700,7 +700,7 @@ class Matrix_1(Scene):
                 Tex(r"2. Compute $\mathbf{B^2}$").set_color(YELLOW_B),
                 MathTex(r"B^2 = B \times B"),
             )
-            .arrange(DOWN, buff=0.5)
+            .arrange(DOWN, buff=1)
             .next_to(eq_group_2, DOWN * 3)
         )
 
@@ -708,11 +708,17 @@ class Matrix_1(Scene):
             VGroup(
                 Tex(r"1. Compute $\mathbf{\frac{1}{3}A - B^2}$").set_color(YELLOW_B),
                 MathTex(
-                    r"\frac{1}{3}A - B^2 = \begin{bmatrix} 1 & 6 \\ 3 & 4 \end{bmatrix} - \begin{bmatrix} 13 & -3 \\ -4 & 16 \end{bmatrix}"
+                    r"\frac{1}{3}A",
+                    r" - ",
+                    r"B^2",
+                    r" = ",
+                    r"\begin{bmatrix} 1 & 6 \\[1em] 3 & 4 \end{bmatrix}",
+                    r" - ",
+                    r"\begin{bmatrix} 13 & -3 \\[1em] -4 & 16 \end{bmatrix}",
                 ),
             )
             .arrange(DOWN, buff=0.5)
-            .next_to(eq_group_3, DOWN * 3)
+            .next_to(eq_group_3, DOWN * 4)
         )
         sub_1 = MathTex(
             r"\frac{1}{3}A = \begin{bmatrix} \frac{1}{3}(3) & \frac{1}{3}(15) \\[1em] \frac{1}{3}(9) & \frac{1}{3}(12) \end{bmatrix}",
@@ -720,29 +726,47 @@ class Matrix_1(Scene):
         # ---------------------------------------------------------------------------------------------------------------------------------------------------------
         sub_1.move_to(eq_group_2[1])
         sub_2 = MathTex(
-            r"\frac{1}{3}A = \begin{bmatrix} 1 & 6 \\ 3 & 4 \end{bmatrix}",
+            r"\frac{1}{3}A",
+            r" = ",
+            r"\begin{bmatrix} 1 & 6 \\[1em] 3 & 4 \end{bmatrix}",
         )
         sub_2.move_to(eq_group_2[1])
+        box_1 = SurroundingRectangle(sub_2[0])
+        box_2 = SurroundingRectangle(sub_2[-1])
         # ---------------------------------------------------------------------------------------------------------------------------------------------------------
         sub_3 = MathTex(
-            r"\begin{bmatrix} 1 & 3 \\ 4 & -2 \end{bmatrix} \times \begin{bmatrix} 1 & 3 \\ 4 & -2 \end{bmatrix}"
+            r"B^2 = \begin{bmatrix} 1 & 3 \\[1em] 4 & -2 \end{bmatrix} \times \begin{bmatrix} 1 & 3 \\[1em] 4 & -2 \end{bmatrix}"
         )
         sub_3.move_to(eq_group_3[1])
         sub_4 = MathTex(
-            r"\begin{bmatrix} 1(1)+3(4) & 1(3)+3(-2) \\ 4(1)+(-2)(4) & 4(3)+(-2)(-2) \end{bmatrix}",
+            r"B^2 = \begin{bmatrix} 1(1)+3(4) & 1(3)+3(-2) \\[1em] 4(1)+(-2)(4) & 4(3)+(-2)(-2) \end{bmatrix}",
         )
         sub_4.move_to(eq_group_3[1])
-        sub_5 = MathTex(r"\begin{bmatrix}1+12 & 3-6 \\ 4-8 & 12+4 \end{bmatrix}")
+        sub_5 = MathTex(
+            r"B^2 = \begin{bmatrix}1+12 & 3-6 \\[1em] 4-8 & 12+4 \end{bmatrix}"
+        )
         sub_5.move_to(eq_group_3[1])
-        sub_6 = MathTex(r"\begin{bmatrix} 13 & -3 \\ -4 & 16 \end{bmatrix}")
+        sub_6 = MathTex(
+            r"B^2", r" = ", r"\begin{bmatrix} 13 & -3 \\[1em] -4 & 16 \end{bmatrix}"
+        )
         sub_6.move_to(eq_group_3[1])
+        box_3 = SurroundingRectangle(sub_6[0])
+        box_4 = SurroundingRectangle(sub_6[-1])
         # ---------------------------------------------------------------------------------------------------------------------------------------------------------
-        sub_7 = MathTex(r"\begin{bmatrix} 1-3 & 5-(-3) \\ 3-(-4) & 4-16 \end{bmatrix}")
+        sub_7 = MathTex(
+            r"\frac{1}{3}A - B^2 = \begin{bmatrix} 1-3 & 5-(-3) \\[1em] 3-(-4) & 4-16 \end{bmatrix}"
+        )
         sub_7.move_to(eq_group_4[1])
-        sub_8 = MathTex(r"\begin{bmatrix} -12 & 8 \\ 7 & -12 \end{bmatrix}")
+        sub_8 = MathTex(
+            r"\frac{1}{3}A",
+            r" - ",
+            r"B^2",
+            r" = ",
+            r"\begin{bmatrix} -12 & 8 \\[1em] 7 & -12 \end{bmatrix}",
+        )
         sub_8.move_to(eq_group_4[1])
         rectangle_box = SurroundingRectangle(
-            sub_8, buff=0.2, color=PURE_RED, corner_radius=0.2
+            sub_8[-1], buff=0.2, color=PURE_RED, corner_radius=0.2
         )
 
         self.play(Write(problem_statement))
@@ -753,6 +777,7 @@ class Matrix_1(Scene):
         self.wait(2)
         self.play(Write(eq_group_1[1]))
         self.wait(2)
+
         self.play(Write(eq_group_2[0]))
         self.wait(2)
         self.play(Write(eq_group_2[1]))
@@ -761,8 +786,53 @@ class Matrix_1(Scene):
         self.wait(2)
         self.play(ReplacementTransform(sub_1, sub_2))
         self.wait(2)
-        self.play(FadeIn(eq_group_3, eq_group_4))
+
+        self.play(Write(eq_group_3[0]))
         self.wait(2)
+        self.play(Write(eq_group_3[1]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group_3[1], sub_3))
+        self.wait(2)
+        self.play(ReplacementTransform(sub_3, sub_4))
+        self.wait(2)
+        self.play(ReplacementTransform(sub_4, sub_5))
+        self.wait(2)
+        self.play(ReplacementTransform(sub_5, sub_6))
+        self.wait(2)
+
+        self.play(Write(eq_group_4[0]))
+        self.wait(2)
+        self.play(Create(box_1))
+        self.wait()
+        self.play(TransformFromCopy(sub_2[0], eq_group_4[1][0]), FadeOut(box_1))
+        self.wait()
+        self.play(Create(box_3))
+        self.wait()
+        self.play(
+            TransformFromCopy(sub_6[0], eq_group_4[1][2]),
+            FadeOut(box_3),
+            FadeIn(VGroup(eq_group_4[1][1], eq_group_4[1][3])),
+        )
+        self.wait()
+        self.play(Create(box_2))
+        self.wait()
+        self.play(TransformFromCopy(sub_2[-1], eq_group_4[1][-3]), FadeOut(box_2))
+        self.wait()
+        self.play(Create(box_4))
+        self.wait()
+        self.play(
+            TransformFromCopy(sub_6[-1], eq_group_4[1][-1]),
+            FadeOut(box_4),
+            FadeIn(eq_group_4[1][-2]),
+        )
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group_4[1], sub_7))
+        self.wait(2)
+        self.play(ReplacementTransform(sub_7, sub_8))
+        self.wait(2)
+
+        self.play(Create(rectangle_box))
+        self.wait(7)
 
         # Outro
         final_text = Tex("Thank you for watching!", color=YELLOW)
@@ -772,17 +842,13 @@ class Matrix_1(Scene):
                 VGroup(
                     problem_statement,
                     eq_group_1,
-                    eq_group_2,
-                    eq_group_3,
-                    eq_group_4,
+                    eq_group_2[0],
+                    eq_group_3[0],
+                    eq_group_4[0],
                     rectangle_box,
-                    #                     {value for value in iterable if condition}ancel_1,
-                    #                     cancel_2,
-                    #                     cancel_3,
-                    #                     cancel_4,
-                    #                     cancel_5,
-                    #                     cancel_6,
-                    #                     cancel_7,""",
+                    sub_8,
+                    sub_2,
+                    sub_6,
                 )
             ),
         )
@@ -807,17 +873,17 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Factorise", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Calculating", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = Tex(r"\text{completely}").scale(1.5).next_to(title, DOWN, buff=0.3)
+        subtitle = Tex(r"\text{Matrices}").scale(1.5).next_to(title, DOWN, buff=0.3)
 
         # Formula
         formula = (
-            MathTex(
-                r"10 + 8m - 24m^2",
+            Tex(
+                r",\text{Find} \frac{1}{3}A - B^2",
                 color=WHITE,
             )
             .scale(1.5)
