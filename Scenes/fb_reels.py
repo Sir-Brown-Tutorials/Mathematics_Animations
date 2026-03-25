@@ -873,17 +873,17 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Calculating", font="Roboto", weight=BOLD, color=YELLOW)
-            .scale(1.5)
+            Text("Calculating Matrices", font="Roboto", weight=BOLD, color=YELLOW)
+            .scale(1.2)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = Tex(r"\text{Matrices}").scale(1.5).next_to(title, DOWN, buff=0.3)
+        subtitle = Tex(r"\text{Find}").scale(1.5).next_to(title, DOWN, buff=0.5)
 
         # Formula
         formula = (
-            Tex(
-                r",\text{Find} \frac{1}{3}A - B^2",
+            MathTex(
+                r"\frac{1}{3}A - B^2",
                 color=WHITE,
             )
             .scale(1.5)
