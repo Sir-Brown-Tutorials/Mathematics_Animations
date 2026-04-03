@@ -1097,6 +1097,8 @@ class ExponentialEquation_1(Scene):
                     eq_group_5,
                     eq_1,
                     eq_2,
+                    rectangle_box_1,
+                    rectangle_box_2,
                 )
             ),
         )
