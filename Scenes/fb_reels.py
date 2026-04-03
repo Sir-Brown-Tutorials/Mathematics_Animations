@@ -894,7 +894,7 @@ class ExponentialEquation_1(Scene):
 
         eq_group_1 = (
             VGroup(
-                Tex(r"Step 1: Simplify $3(2^{x + 2})$").set_color(YELLOW_B),
+                Tex(r"Step 1:", r" Simplify $3(2^{x + 2})$").set_color(YELLOW_B),
                 MathTex(r"a^{m+n} = a^m \times a^n"),
                 MathTex(r"3(2^{x + 2}) = 3 \times 2^x \times 2^2"),
                 MathTex(r"3(2^{x + 2}) = 3 \times 2^x \times 4"),
@@ -904,34 +904,37 @@ class ExponentialEquation_1(Scene):
             .arrange(DOWN, buff=0.5)
             .next_to(eq_1, DOWN * 3)
         )
+        eq_group_1[0][0].set_color(PURE_BLUE)
 
         eq_group_2 = (
             VGroup(
-                Tex(r"Step 2: Simplify $2^{2x}$").set_color(YELLOW_B),
+                Tex(r"Step 2:", r" Simplify $2^{2x}$").set_color(YELLOW_B),
                 MathTex(r"a^{mn} = (a^m)^n"),
                 MathTex(r"2^{2x} = (2^x)^2"),
             )
             .arrange(DOWN, buff=0.5)
             .next_to(eq_group_1, DOWN * 3)
         )
+        eq_group_2[0][0].set_color(PURE_BLUE)
 
-        eq_2 = MathTex(r"(", r"2^x", r")^2", r" + 32 = ", r"12(", r"2^x", r")").next_to(
+        eq_2 = MathTex(r"(2^x)^2", r" + 32 = ", r"12(2^x)").next_to(
             eq_group_2, DOWN * 3
         )
 
         eq_group_3 = (
             VGroup(
-                Tex(r"Step 3: Substitute $y$ for $2x$").set_color(YELLOW_B),
-                MathTex(r"y^2 + 32 = 12y"),
+                Tex(r"Step 3:", r" Substitute $y$ for $2x$").set_color(YELLOW_B),
+                MathTex(r"y^2", r" + 32 = ", r"12y"),
                 MathTex(r"y^2 - 12y + 32 = 0"),
             )
             .arrange(DOWN, buff=0.5)
             .next_to(eq_1, DOWN * 6)
         )
+        eq_group_3[0][0].set_color(PURE_BLUE)
 
         eq_group_4 = (
             VGroup(
-                Tex(r"Step 4: Solve $y^2 -12y + 32 = 0$").set_color(YELLOW_B),
+                Tex(r"Step 4:", r" Solve $y^2 -12y + 32 = 0$").set_color(YELLOW_B),
                 MathTex(r"y^2 - 12y + 32 = 0"),
                 MathTex(r"(y-4)(y-8) = 0"),
                 MathTex(r"y = 4 \qquad \text{or} \qquad y = 8"),
@@ -939,27 +942,36 @@ class ExponentialEquation_1(Scene):
             .arrange(DOWN, buff=0.5)
             .next_to(eq_group_3, DOWN * 3)
         )
+        eq_group_4[0][0].set_color(PURE_BLUE)
 
         eq_group_5 = (
             VGroup(
-                Tex(r"Step 5: Solve for $x$ in $2^x = y$").set_color(YELLOW_B),
+                Tex(r"Step 5:", r" Solve for $x$ in $2^x = y$").set_color(YELLOW_B),
                 VGroup(
                     VGroup(
                         Tex(r"When $y = 4$"),
                         MathTex(r"2^x = 4"),
-                        MathTex(r"2^x = 2^2"),
+                        MathTex(r"2^x", r" = ", r"2^2"),
                         MathTex(r"x = 2"),
                     ).arrange(DOWN),
                     VGroup(
                         Tex(r"When $y = 8$"),
                         MathTex(r"2^x = 8"),
-                        MathTex(r"2^x = 2^3"),
+                        MathTex(r"2^x", r" = ", r"2^3"),
                         MathTex(r"x = 3"),
                     ).arrange(DOWN),
-                ).arrange(RIGHT),
+                ).arrange(RIGHT, buff=0.5),
             )
             .arrange(DOWN, buff=0.5, aligned_edge=UP)
             .next_to(eq_group_4, DOWN * 3)
+        )
+        eq_group_5[0][0].set_color(PURE_BLUE)
+
+        rectangle_box_1 = SurroundingRectangle(
+            eq_group_5[1][0][3], buff=0.15, color=PURE_RED, corner_radius=0.2
+        )
+        rectangle_box_2 = SurroundingRectangle(
+            eq_group_5[1][1][3], buff=0.15, color=PURE_RED, corner_radius=0.2
         )
 
         self.play(Write(problem_statement))
@@ -990,37 +1002,87 @@ class ExponentialEquation_1(Scene):
 
         self.play(Create(box_1))
         self.wait()
-        self.play(TransformFromCopy(eq_1[0], eq_2[:3]), FadeOut(box_1))
+        self.play(TransformFromCopy(eq_1[0], eq_2[0]), FadeOut(box_1))
         self.wait()
-        self.play(Write(eq_2[3]))
+        self.play(Write(eq_2[1]))
         self.wait()
         self.play(Create(box_2))
         self.wait()
-        self.play(TransformFromCopy(eq_1[-1], eq_2[-3:]), FadeOut(box_2))
+        self.play(TransformFromCopy(eq_1[-1], eq_2[-1]), FadeOut(box_2))
         self.wait(2)
 
         self.play(
             FadeOut(eq_group_1, eq_group_2, shift=UP),
             eq_2.animate.next_to(eq_1, DOWN * 2),
         )
+        box_3 = SurroundingRectangle(eq_2[0])
+        box_4 = SurroundingRectangle(eq_2[1])
+        box_5 = SurroundingRectangle(eq_2[2])
 
         self.play(Write(eq_group_3[0]))
         self.wait(2)
-        self.play(Write(eq_group_3[1]))
-        self.wait(2)
+        self.play(Create(box_3))
+        self.wait()
+        self.play(TransformFromCopy(eq_2[0], eq_group_3[1][0]), FadeOut(box_3))
+        self.wait()
+        self.play(Create(box_4))
+        self.wait()
+        self.play(TransformFromCopy(eq_2[1], eq_group_3[1][1]), FadeOut(box_4))
+        self.wait()
+        self.play(Create(box_5))
+        self.wait()
+        self.play(TransformFromCopy(eq_2[2], eq_group_3[1][2]), FadeOut(box_5))
+        self.wait()
         self.play(TransformFromCopy(eq_group_3[1], eq_group_3[2]))
         self.wait(2)
 
         self.play(Write(eq_group_4[0]))
         self.wait(2)
-        self.play(Write(eq_group_4[1]))
+        self.play(TransformFromCopy(eq_group_3[2], eq_group_4[1]))
         self.wait(2)
         self.play(TransformFromCopy(eq_group_4[1], eq_group_4[2]))
         self.wait(2)
         self.play(TransformFromCopy(eq_group_4[2], eq_group_4[3]))
         self.wait(2)
 
-        self.play(FadeIn(eq_group_5))
+        self.play(Write(eq_group_5[0]))
+        self.wait()
+        self.play(Write(eq_group_5[1][0][0]))
+        self.wait()
+        self.play(Write(eq_group_5[1][0][1]))
+        self.wait()
+        self.play(TransformFromCopy(eq_group_5[1][0][1], eq_group_5[1][0][2]))
+        self.wait()
+        self.play(
+            TransformFromCopy(
+                VGroup(
+                    eq_group_5[1][0][2][0][-1],
+                    eq_group_5[1][0][2][1],
+                    eq_group_5[1][0][2][2][-1],
+                ),
+                eq_group_5[1][0][3],
+            )
+        )
+        self.wait()
+
+        self.play(Write(eq_group_5[1][1][0]))
+        self.wait()
+        self.play(Write(eq_group_5[1][1][1]))
+        self.wait()
+        self.play(TransformFromCopy(eq_group_5[1][1][1], eq_group_5[1][1][2]))
+        self.wait()
+        self.play(
+            TransformFromCopy(
+                VGroup(
+                    eq_group_5[1][1][2][0][-1],
+                    eq_group_5[1][1][2][1],
+                    eq_group_5[1][1][2][2][-1],
+                ),
+                eq_group_5[1][1][3],
+            )
+        )
+        self.wait()
+        self.play(Create(VGroup(rectangle_box_1, rectangle_box_2)))
         self.wait(7)
 
         # Outro
