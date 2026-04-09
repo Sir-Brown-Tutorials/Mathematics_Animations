@@ -1111,6 +1111,174 @@ class ExponentialEquation_1(Scene):
         self.play(FadeOut(final_text, logo_corner))
 
 
+class QuadraticExpression(Scene):
+    def construct(self):
+        # Create a custom Latex template that includes the cancel package
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # Load and position logo image
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.2)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # Problem Statement
+        problem_statement = Tex(
+            r"\text{Factorise completely} \\[2em]", r" $2a^3 - 14a^2 + 24a$"
+        ).scale(1.3)
+        problem_statement[-1].scale(1.5).set_color(YELLOW_D)
+        problem = (
+            Tex(r"\text{Factorising a Cubic Expression}")
+            .to_edge(UP)
+            .scale(1.2)
+            .set_color(PURE_YELLOW)
+        )
+        underline = Underline(problem)
+        problem_group = VGroup(problem, underline)
+
+        eq_1 = MathTex(r"2a^3 - 14a^2 + 24a").next_to(problem_group, DOWN * 2)
+        eq_1_box = SurroundingRectangle(eq_1)
+
+        eq_group_1 = (
+            VGroup(
+                Tex(r"\text{Step 1: }", r"\text{Factor out the \textbf{HCF}").set_color(
+                    YELLOW_B
+                ),
+                MathTex(r"2a^3 - 14a^2 + 24a"),
+                MathTex(r"2a", r"(", r"a^2 - 7a + 12", r")"),
+            )
+            .arrange(DOWN, buff=0.5)
+            .next_to(eq_1, DOWN * 3)
+        )
+        eq_group_1[0][0].set_color(PURE_BLUE)
+        box_1 = SurroundingRectangle(eq_group_1[2][0])
+        box_2 = SurroundingRectangle(eq_group_1[2][2])
+
+        eq_group_2 = (
+            VGroup(
+                Tex(r"\text{Step 2: }", r"\text{Factorise} $a^2 - 7a + 12$").set_color(
+                    YELLOW_B
+                ),
+                MathTex(r"a^2 - 7a + 12"),
+                Tex(
+                    r"\text{Find two numbers that multiply to} $\boxed{12}$ \\",
+                    r"\text{and add to} $\boxed{-7}$",
+                ).set_color(RED),
+                MathTex(
+                    r"-3 \times -4 = \boxed{12} \quad \text{and} \quad -3 + -4 = \boxed{-7}"
+                ),
+                MathTex(r"a^2 - 3a - 4a + 12"),
+            )
+            .arrange(DOWN, buff=0.5)
+            .next_to(eq_group_1, DOWN * 3)
+        )
+        eq_group_2[0][0].set_color(PURE_BLUE)
+
+        eq_group_3 = (
+            VGroup(
+                Tex(r"\text{Step 3: }", r"\text{Combine all the factors}").set_color(
+                    YELLOW_B
+                ),
+                MathTex(r"2a", r"(a - 3)", r"(a - 4)"),
+            )
+            .arrange(DOWN, buff=0.5)
+            .next_to(eq_group_2, DOWN * 3)
+        )
+        eq_group_3[0][0].set_color(PURE_BLUE)
+
+        rectangle_box = SurroundingRectangle(
+            eq_group_3[1], buff=0.3, color=PURE_RED, corner_radius=0.2
+        )
+        sub_1 = MathTex(r"(a^2 - 3a)(-4a + 12)")
+        sub_1.move_to(eq_group_2[-1])
+        sub_2 = MathTex(
+            r"a(a - 3)-4(a -3)",
+        )
+        sub_2.move_to(eq_group_2[-1])
+        sub_3 = MathTex(r"(a - 4)", r"(a - 3)")
+        sub_3.move_to(eq_group_2[-1])
+        box_3 = SurroundingRectangle(sub_3[0])
+        box_4 = SurroundingRectangle(sub_3[-1])
+
+        self.play(Write(problem_statement))
+        self.wait(2)
+        self.play(Transform(problem_statement, problem_group))
+        self.wait(2)
+        self.play(Write(eq_1))
+        self.wait(2)
+
+        self.play(Write(eq_group_1[0]))
+        self.wait(2)
+        self.play(Create(eq_1_box))
+        self.wait()
+        self.play(TransformFromCopy(eq_1, eq_group_1[1]), FadeOut(eq_1_box))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group_1[1], eq_group_1[2]))
+        self.wait(2)
+        self.play(Write(eq_group_2[0]))
+        self.wait(2)
+        self.play(Create(box_2))
+        self.play(TransformFromCopy(eq_group_1[2][2], eq_group_2[1]), FadeOut(box_2))
+        self.wait(2)
+        self.play(Write(eq_group_2[2]))
+        self.wait(2)
+        self.play(Write(eq_group_2[3]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group_2[1], eq_group_2[4]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group_2[4], sub_1))
+        self.wait(2)
+        self.play(ReplacementTransform(sub_1, sub_2))
+        self.wait(2)
+        self.play(ReplacementTransform(sub_2, sub_3))
+        self.wait(2)
+        self.play(Write(eq_group_3[0]))
+        self.wait(2)
+        self.play(Create(box_1))
+        self.wait()
+        self.play(TransformFromCopy(eq_group_1[2][0], eq_group_3[1][0]), FadeOut(box_1))
+        self.wait()
+        self.play(Create(box_3))
+        self.wait()
+        self.play(TransformFromCopy(sub_3[0], eq_group_3[1][1]), FadeOut(box_3))
+        self.wait()
+        self.play(Create(box_4))
+        self.wait()
+        self.play(TransformFromCopy(sub_3[-1], eq_group_3[1][2]), FadeOut(box_4))
+        self.wait(2)
+        self.play(Create(rectangle_box))
+        self.wait(3)
+
+        # Outro
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    problem_statement,
+                    eq_group_1,
+                    eq_group_2,
+                    eq_1,
+                    eq_group_3,
+                    sub_3,
+                    #                     eq_2,
+                    rectangle_box,
+                    #                     rectangle_box_2,
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
 # Thumbnail
 class Thumbnail(Scene):
     def construct(self):
