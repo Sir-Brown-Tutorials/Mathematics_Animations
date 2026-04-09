@@ -1291,19 +1291,17 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Solve", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Factorise", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = (
-            Tex(r"\text{the equation}").scale(1.5).next_to(title, DOWN, buff=0.75)
-        )
+        subtitle = Tex(r"\text{completely}").scale(1.5).next_to(title, DOWN, buff=0.75)
 
         # Formula
         formula = (
             MathTex(
-                r"2^{2x} + 32 = 3(2^{x + 2})",
+                r"2a^3 - 14a^2 + 24a",
                 color=WHITE,
             )
             .scale(1.5)
