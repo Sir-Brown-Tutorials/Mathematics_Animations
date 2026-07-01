@@ -1306,10 +1306,10 @@ class QuadraticExpression(Scene):
             MathTex(r"(3d - 2)", r"  ", r"(-4d - 1)"),
         ).arrange(DOWN, buff=0.5)
         box_1 = SurroundingRectangle(
-            eq_group[7][0], color=PURE_BLUE, corner_radius=0.2, buff=0.2
+            eq_group[6][0], color=PURE_BLUE, corner_radius=0.2, buff=0.2
         )
         box_2 = SurroundingRectangle(
-            eq_group[7][2], color=PURE_GREEN, corner_radius=0.2, buff=0.2
+            eq_group[6][2], color=PURE_GREEN, corner_radius=0.2, buff=0.2
         )
 
         self.play(Write(problem_group[0]))
@@ -1329,8 +1329,6 @@ class QuadraticExpression(Scene):
         self.play(TransformFromCopy(eq_group[4], eq_group[5]))
         self.wait(2)
         self.play(TransformFromCopy(eq_group[5], eq_group[6]))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[6], eq_group[7]))
         self.wait(2)
         self.play(Create(box_1), Create(box_2))
         self.wait(7)
