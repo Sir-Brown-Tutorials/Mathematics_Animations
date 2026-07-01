@@ -1278,6 +1278,77 @@ class QuadraticExpression(Scene):
         self.wait()
         self.play(FadeOut(final_text, logo_corner))
 
+class QuadraticExpression(Scene):
+    def construct(self):
+        # Create a custom Latex template that includes the cancel package
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # Load and position logo image
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.2)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # Problem Statement
+        problem = Tex(r"Factorise completely $2 + 5d - 12d^2$")
+        underline = Underline(problem)
+        problem_group = VGroup(problem, underline)
+        eq_group = VGroup(
+            Tex(r"Rearrange the expression into $ax^2 + bx + c$"),
+            MathTex(r"2 + 5d - 12d^2"),
+            MathTex(r"-12d^2 + 5d + 2"),
+            MathTex(r"-12d^2 + 8d - 3d + 2"),
+            MathTex(r"(-12d^2 - 8d )(-3d + 2)"),
+            MathTex(r"-4d(3d - 2)-1(3d - 2)"),
+            MathTex(r"(3d - 2)", r"  ", r"(-4d - 1)"),
+        ).arrange(DOWN, buff=0.5)
+        box_1 = SurroundingRectangle(
+            eq_group[7][0], color=PURE_BLUE, corner_radius=0.2, buff=0.2
+        )
+        box_2 = SurroundingRectangle(
+            eq_group[7][2], color=PURE_GREEN, corner_radius=0.2, buff=0.2
+        )
+
+        self.play(Write(problem_group[0]))
+        self.wait(2)
+        self.play(problem_group.animate.to_edge(UP).set_color(YELLOW))
+        self.wait(2)
+        self.play(Write(eq_group[0]))
+        self.wait(2)
+        self.play(Write(eq_group[1]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[1], eq_group[2]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[2], eq_group[3]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[3], eq_group[4]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[4], eq_group[5]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[5], eq_group[6]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[6], eq_group[7]))
+        self.wait(2)
+        self.play(Create(box_1), Create(box_2))
+        self.wait(7)
+
+        # Outro
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(VGroup(problem_group, eq_group, box_1, box_2)),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
 
 # Thumbnail
 class Thumbnail(Scene):
