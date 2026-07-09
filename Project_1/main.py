@@ -4,7 +4,7 @@ config.frame_width = 16
 config.frame_height = 9
 config.frame_rate = 30
 config.disable_caching = True
-# config.background_color = GRAY_E
+config.background_color = "#1E1E1E"
 
 
 class Reel(Scene):
