@@ -1,7 +1,7 @@
 from manim import *
 
-config.frame_width = 9
-config.frame_height = 16
+config.frame_width = 16
+config.frame_height = 9
 config.frame_rate = 30
 config.disable_caching = True
 # config.background_color = GRAY_E
