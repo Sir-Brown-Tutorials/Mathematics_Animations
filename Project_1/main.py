@@ -25,76 +25,17 @@ class Reel(Scene):
         problem = Tex(r"Solve for $k$ in $x = \frac{b - k^3}{k^3}$")
         underline = Underline(problem)
         problem_group = VGroup(problem, underline)
-        eq_group = VGroup(
-            MathTex(r"k^3 \times x = \frac{b - k^3}{k^3} \times k^3"),
-            MathTex(r"k^3x = b - k^3"),
-            MathTex(r"k^3x + k^3 = b - k^3 + k^3"),
-            MathTex(r"k^3x + k^3 = b"),
-            MathTex(r"k^3(x + 1) = b"),
-            MathTex(r"\frac{k^3(x + 1)}{(x + 1)} = \frac{b}{x + 1}"),
-            MathTex(r"k^3 = \frac{b}{x + 1}"),
-            MathTex(r"\sqrt[3]{k^3} = \sqrt[3]{\frac{b}{x + 1}}"),
-            MathTex(r"k = \sqrt[3]{\frac{b}{x + 1}}"),
-        ).arrange(DOWN, buff=0.5)
-        rectangle_box = SurroundingRectangle(
-            eq_group[8], buff=0.2, color=PURE_RED, corner_radius=0.2
-        )
-        cancel_1 = MathTex(
-            r"k^3 \times x = \frac{b - k^3}{\cancel{k^3}} \times \cancel{k^3}",
-            tex_template=my_template,
-        )
-        cancel_1.move_to(eq_group[0])
-        cancel_2 = MathTex(
-            r"\frac{k^3\cancel{(x + 1)}}{\cancel{(x + 1)}} = \frac{b}{x + 1}",
-            tex_template=my_template,
-        )
-        cancel_2.move_to(eq_group[5])
-        cancel_3 = MathTex(
-            r"\sqrt[{\cancel{3}}]{k^{\cancel{3}}} = \sqrt[3]{\frac{b}{x + 1}}",
-            tex_template=my_template,
-        )
-        cancel_3.move_to(eq_group[7])
 
         self.play(Write(problem_group[0]))
         self.wait(2)
         self.play(problem_group.animate.to_edge(UP).scale(1.5).set_color(YELLOW))
-        self.wait(2)
-        self.play(Write(eq_group[0]))
-        self.wait(2)
-        self.play(ReplacementTransform(eq_group[0], cancel_1))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[0], eq_group[1]))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[1], eq_group[2]))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[2], eq_group[3]))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[3], eq_group[4]))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[4], eq_group[5]))
-        self.wait(2)
-        self.play(ReplacementTransform(eq_group[5], cancel_2))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[5], eq_group[6]))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[6], eq_group[7]))
-        self.wait(2)
-        self.play(ReplacementTransform(eq_group[7], cancel_3))
-        self.wait(2)
-        self.play(TransformFromCopy(eq_group[7], eq_group[8:]))
-        self.wait(2)
-        self.play(Create(rectangle_box))
-        self.wait(2)
+        self.wait(5)
 
         # Outro
         final_text = Tex("Thank you for watching!", color=YELLOW)
         self.play(
             Write(final_text),
-            ShrinkToCenter(
-                VGroup(
-                    problem_group, eq_group, rectangle_box, cancel_1, cancel_2, cancel_3
-                )
-            ),
+            ShrinkToCenter(VGroup(problem_group)),
         )
         self.wait()
         self.play(
