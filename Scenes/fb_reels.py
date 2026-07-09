@@ -4,7 +4,7 @@ config.frame_width = 9
 config.frame_height = 16
 config.frame_rate = 30
 config.disable_caching = True
-# config.background_color = GRAY_E
+config.background_color = "#1E1E1E"
 
 
 class Reel(Scene):
@@ -1278,7 +1278,8 @@ class QuadraticExpression(Scene):
         self.wait()
         self.play(FadeOut(final_text, logo_corner))
 
-class QuadraticExpression(Scene):
+
+class QuadraticExpression_1(Scene):
     def construct(self):
         # Create a custom Latex template that includes the cancel package
         my_template = TexTemplate()
@@ -1360,17 +1361,19 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Factorise", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Solve", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = Tex(r"\text{completely}").scale(1.5).next_to(title, DOWN, buff=0.75)
+        subtitle = (
+            Tex(r"\text{for} \textbf{x}").scale(1.5).next_to(title, DOWN, buff=0.75)
+        )
 
         # Formula
         formula = (
             MathTex(
-                r"2a^3 - 14a^2 + 24a",
+                r"2^{2x} + 32 = 3(2^{x + 2})",
                 color=WHITE,
             )
             .scale(1.5)
