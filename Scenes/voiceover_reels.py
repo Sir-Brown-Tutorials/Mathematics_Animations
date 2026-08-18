@@ -22,8 +22,11 @@ from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.recorder import RecorderService
 
 config.frame_rate = 30
-config.pixel_height = 1080
-config.pixel_width = 1920
+config.pixel_width = 1080
+config.frame_width = 9
+config.pixel_height = 1920
+config.frame_height = 16
+config.disable_caching = True
 
 
 class FactoriseCompletely(VoiceoverScene):
@@ -186,3 +189,137 @@ class FactoriseCompletely(VoiceoverScene):
         ) as tracker:
             self.play(Create(box), Write(answer_label), run_time=tracker.duration)
         self.wait(2)
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+# FIRST VOICEOVER REELS PROJECT
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+class FirstProject(VoiceoverScene):
+    def construct(self):
+        self.set_speech_service(RecorderService(device_index=7, rate=48000))
+
+        # -----------------------------------------------------------------
+        # Create a custom Latex template that includes the cancel package
+        # -----------------------------------------------------------------
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # -----------------------------------------------------------------
+        # Load and position logo image
+        # -----------------------------------------------------------------
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.15)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # -----------------------------------------------------------------
+        # Problem Statement
+        # -----------------------------------------------------------------
+        problem = Tex(
+            r"Solve the equation $2x^2 = x + 7$, \\",
+            r"giving your answer to two decimal places",
+        )
+        title = Tex(r"Solve $2x^2 = x = 7$")
+        underline = Underline(title)
+        title_group = VGroup(title, underline).to_edge(UP).scale(1.5).set_color(YELLOW)
+
+        # -----------------------------------------------------------------
+        # Equation group
+        # -----------------------------------------------------------------
+        eq_group = VGroup(
+            MathTex(r"2x^2 = x + 7"),
+            MathTex(r"ax^2 + bx + c = 0"),
+            MathTex(r"x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}"),
+            Tex(r"$a = 2$, $b = -1$, $c = -7$"),
+            MathTex(r"x = \frac{-(-1) \pm \sqrt{(-1)^2 - 4(2)(-7)}}{2(2)}"),
+            MathTex(r"x = \frac{1 \pm \sqrt{57}}{4}"),
+            MathTex(r"x = \frac{1 + 7.5498}{4} \approx 2.13745"),
+            Text(r"or", font_size=40, color=RED),
+            MathTex(r"x = \frac{1 - 7.5498}{4} \approx -1.63745"),
+            Tex(r"$x = 2.14$", r" \qquad or \qquad", r"$x = -1.64$"),
+        ).arrange(DOWN, buff=0.5)
+
+        # -----------------------------------------------------------------
+
+        # -----------------------------------------------------------------
+        rectangle_box_1 = SurroundingRectangle(
+            eq_group[9][0], buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+        rectangle_box_2 = SurroundingRectangle(
+            eq_group[9][-1], buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+        # -----------------------------------------------------------------
+
+        # -----------------------------------------------------------------
+        sub_eq_1 = MathTex(r"2x^2 - x -7 = 0")
+        sub_eq_1.move_to(eq_group[1])
+
+        sub_eq_2 = MathTex(r"x = \frac{1 \pm \sqrt{1 + 56}}{4}")
+        sub_eq_2.move_to(eq_group[4])
+
+        # -----------------------------------------------------------------
+
+        # -----------------------------------------------------------------
+        self.play(Write(problem))
+        self.wait(2)
+        self.play(FadeTransform(problem, title_group))
+        self.wait(2)
+        self.add(eq_group, rectangle_box_1, rectangle_box_2)
+        self.wait(5)
+
+        # -----------------------------------------------------------------
+        # Outro
+        # -----------------------------------------------------------------
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(title_group, eq_group, problem, rectangle_box_1, rectangle_box_2)
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+# Thumbnail
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+class Thumbnail(Scene):
+    def construct(self):
+        # Add background image
+        background = ImageMobject("../Images/chalk_board.jpg")
+        background.set_z_index(-1)
+        background.scale_to_fit_height(config.frame_height)
+        background.scale_to_fit_width(config.frame_width)
+        self.add(background)
+
+        # Title text
+        title = (
+            Text("Solve", font="Roboto", weight=BOLD, color=YELLOW)
+            .scale(1.5)
+            .shift(UP * 3)
+        )
+        # Subtitle
+        subtitle = (
+            Tex(r"\text{for} \textbf{x}").scale(1.5).next_to(title, DOWN, buff=0.75)
+        )
+
+        # Formula
+        formula = (
+            MathTex(
+                r"2^{2x} + 32 = 3(2^{x + 2})",
+                color=WHITE,
+            )
+            .scale(1.5)
+            .next_to(subtitle, DOWN, buff=1)
+        )
+
+        # Add everything
+        self.add(title, subtitle, formula)
