@@ -19,7 +19,9 @@ a line by deleting its cached files and running again.
 
 from manim import *
 from manim_voiceover import VoiceoverScene
-from manim_voiceover.services.recorder import RecorderService
+
+# from manim_voiceover.services.recorder import RecorderService
+from manim_voiceover.services.gtts import GTTSService
 
 config.frame_rate = 30
 config.pixel_width = 1080
@@ -31,7 +33,8 @@ config.disable_caching = True
 
 class FactoriseCompletely(VoiceoverScene):
     def construct(self):
-        self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        self.set_speech_service(GTTSService(lang="en", transcription_model="base"))
 
         title = Text("Factorise Completely", font_size=40, color=BLUE).to_edge(UP)
 
@@ -196,7 +199,8 @@ class FactoriseCompletely(VoiceoverScene):
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 class FirstProject(VoiceoverScene):
     def construct(self):
-        self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        self.set_speech_service(GTTSService(lang="en", transcription_model="base"))
 
         # -----------------------------------------------------------------
         # Create a custom Latex template that includes the cancel package
@@ -232,7 +236,7 @@ class FirstProject(VoiceoverScene):
             MathTex(r"2x^2 = x + 7"),
             MathTex(r"ax^2 + bx + c = 0"),
             MathTex(r"x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}"),
-            Tex(r"$a = 2$, $b = -1$, $c = -7$"),
+            Tex(r"$a = 2$,", r"$b = -1$,", r"$c = -7$"),
             MathTex(r"x = \frac{-(-1) \pm \sqrt{(-1)^2 - 4(2)(-7)}}{2(2)}"),
             MathTex(r"x = \frac{1 \pm \sqrt{57}}{4}"),
             MathTex(r"x = \frac{1 + 7.5498}{4} \approx 2.13745"),
@@ -262,12 +266,80 @@ class FirstProject(VoiceoverScene):
         # -----------------------------------------------------------------
 
         # -----------------------------------------------------------------
-        self.play(Write(problem))
-        self.wait(2)
+        text = "We are given an equation 2x squared equals x plus 7, we are required to solve for x and give our answer to two decimal places."
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(problem), run_time=tracker.duration)
+        self.wait()
         self.play(FadeTransform(problem, title_group))
-        self.wait(2)
-        self.add(eq_group, rectangle_box_1, rectangle_box_2)
-        self.wait(5)
+        self.wait()
+        self.play(Write(eq_group[0]))
+
+        text = "The first step is to write the equation in a standard form of ax to the power 2 plus bx plus c is equal to zero"
+
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[1]), run_time=tracker.duration)
+        self.wait()
+
+        text = (
+            "The equation will transform to 2x squared minus x minus 7 is equal to zero"
+        )
+        with self.voiceover(text=text) as tracker:
+            self.play(
+                ReplacementTransform(eq_group[1], sub_eq_1), run_time=tracker.duration
+            )
+        self.wait()
+
+        text = "We will use the quadratic formula"
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[2]), run_time=tracker.duration)
+        self.wait()
+
+        text = "From the equation, a = 2"
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[3][0]), run_time=tracker.duration)
+        self.wait()
+
+        text = "b = -1"
+        with self.voiceover(tetx=text) as tracker:
+            self.play(Write(eq_group[3][1]), run_time=tracker.duration)
+        self.wait()
+
+        text = "c = -7"
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[3][-1]), run_time=tracker.duration)
+        self.wait()
+
+        text = "We substitute the values of a, b, and c into the quadratic formula"
+        with self.voiceover(text=text):
+            self.play(Write(eq_group[4]), run_time=2)
+            self.play(ReplacementTransform(eq_group[4], sub_eq_2), run_time=1)
+        self.wait()
+
+        text = f"The equation simplifies to {MathTex(r'x = \frac{1 \pm \sqrt{57}}{4}')}"
+        with self.voiceover(text=text) as tracker:
+            self.play(
+                TransformFromCopy(sub_eq_2, eq_group[5]), run_time=tracker.duration
+            )
+        self.wait()
+
+        text = "Since the squareroot of 57 is equivalent to 7.5498, we get x is equal to 1 plus 7.5498 over 4 which is approximately 2.17745"
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[6]))
+        self.wait()
+
+        text = "or x equals 1 minus 7.5498 over 4 which is approximately -1.63745"
+        with self.voiceover(text=text) as tracker:
+            self.play(
+                FadeIn(eq_group[7]), Write(eq_group[8]), run_time=tracker.duration
+            )
+        self.wait()
+
+        text = "Therefore, our final answer to two decimal places are x = 2.14 or x = -1.64"
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[9], run_time=2))
+            self.play(Create(rectangle_box_1), run_time=1)
+            self.play(Create(rectangle_box_2), run_time=1)
+        self.wait()
 
         # -----------------------------------------------------------------
         # Outro
@@ -276,7 +348,15 @@ class FirstProject(VoiceoverScene):
         self.play(
             Write(final_text),
             ShrinkToCenter(
-                VGroup(title_group, eq_group, problem, rectangle_box_1, rectangle_box_2)
+                VGroup(
+                    title_group,
+                    eq_group,
+                    problem,
+                    rectangle_box_1,
+                    rectangle_box_2,
+                    sub_eq_1,
+                    sub_eq_2,
+                )
             ),
         )
         self.wait()
