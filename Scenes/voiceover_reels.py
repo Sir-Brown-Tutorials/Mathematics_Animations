@@ -268,7 +268,7 @@ class FirstProject(VoiceoverScene):
         # -----------------------------------------------------------------
         text = "We are given an equation 2x squared equals x plus 7, we are required to solve for x and give our answer to two decimal places."
         with self.voiceover(text=text) as tracker:
-            self.play(Write(problem), run_time=tracker.duration)
+            self.play(Write(problem), run_time=2)
         self.wait()
         self.play(FadeTransform(problem, title_group))
         self.wait()
@@ -277,7 +277,7 @@ class FirstProject(VoiceoverScene):
         text = "The first step is to write the equation in a standard form of ax to the power 2 plus bx plus c is equal to zero"
 
         with self.voiceover(text=text) as tracker:
-            self.play(Write(eq_group[1]), run_time=tracker.duration)
+            self.play(Write(eq_group[1]), run_time=2)
         self.wait()
 
         text = (
@@ -300,7 +300,7 @@ class FirstProject(VoiceoverScene):
         self.wait()
 
         text = "b = -1"
-        with self.voiceover(tetx=text) as tracker:
+        with self.voiceover(text=text) as tracker:
             self.play(Write(eq_group[3][1]), run_time=tracker.duration)
         self.wait()
 
