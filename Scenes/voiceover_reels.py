@@ -19,9 +19,10 @@ a line by deleting its cached files and running again.
 
 from manim import *
 from manim_voiceover import VoiceoverScene
+from manim_voiceover.services.gtts import GTTSService
 
 # from manim_voiceover.services.recorder import RecorderService
-from manim_voiceover.services.gtts import GTTSService
+
 
 config.frame_rate = 30
 config.pixel_width = 1080
@@ -33,8 +34,8 @@ config.disable_caching = True
 
 class FactoriseCompletely(VoiceoverScene):
     def construct(self):
-        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
-        self.set_speech_service(GTTSService(lang="en", transcription_model="base"))
+        self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        # self.set_speech_service(GTTSService(lang="en", transcription_model="base"))
 
         title = Text("Factorise Completely", font_size=40, color=BLUE).to_edge(UP)
 
