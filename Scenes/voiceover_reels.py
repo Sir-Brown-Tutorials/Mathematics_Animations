@@ -20,9 +20,7 @@ a line by deleting its cached files and running again.
 from manim import *
 from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.gtts import GTTSService
-
-# from manim_voiceover.services.recorder import RecorderService
-
+from manim_voiceover.services.recorder import RecorderService
 
 config.frame_rate = 30
 config.pixel_width = 1080
@@ -201,7 +199,7 @@ class FactoriseCompletely(VoiceoverScene):
 class FirstProject(VoiceoverScene):
     def construct(self):
         # self.set_speech_service(RecorderService(device_index=7, rate=48000))
-        self.set_speech_service(GTTSService(lang="en", transcription_model="base"))
+        self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
 
         # -----------------------------------------------------------------
         # Create a custom Latex template that includes the cancel package
@@ -267,10 +265,14 @@ class FirstProject(VoiceoverScene):
         # -----------------------------------------------------------------
 
         # -----------------------------------------------------------------
-        text = "We are given an equation 2x squared equals x plus 7, we are required to solve for x and give our answer to two decimal places."
+        text = "We are given an equation <bookmark mark='A'/>two x squared equals x plus 7, we are required to solve for x and <bookmark mark='B'/>give our answer to two decimal places."
         with self.voiceover(text=text) as tracker:
-            self.play(Write(problem), run_time=2)
-        self.wait()
+            self.wait_until_bookmark("A")
+            self.play(
+                Write(problem[0]), run_time=tracker.time_until_bookmark("B"), limit=2
+            )
+            self.wait_until_bookmark("B")
+            self.play(Write(problem[1]), run_time=2)
         self.play(FadeTransform(problem, title_group))
         self.wait()
         self.play(Write(eq_group[0]))
