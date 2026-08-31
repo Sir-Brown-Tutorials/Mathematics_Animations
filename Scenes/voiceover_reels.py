@@ -1,22 +1,3 @@
-"""
-Factorise Completely: 2x^2y - 11xy + 5y
------------------------------------------
-Manim CE scene with manim-voiceover RecorderService, so narration
-is recorded live in your own voice as each animation plays.
-
-Run with (draft quality, for checking pacing while you record):
-    manim -pql factorise_2x2y_11xy_5y.py FactoriseCompletely
-
-Final render (high quality):
-    manim -pqh factorise_2x2y_11xy_5y.py FactoriseCompletely
-
-Note: the first time you run this, RecorderService will prompt you
-in the terminal to record each voiceover line. Re-running the scene
-reuses cached audio unless you delete it from the voiceover cache
-(the .mp3/.json files it creates alongside your project), so re-record
-a line by deleting its cached files and running again.
-"""
-
 from manim import *
 from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.gtts import GTTSService
