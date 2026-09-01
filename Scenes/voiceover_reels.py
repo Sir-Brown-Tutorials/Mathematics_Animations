@@ -1,3 +1,5 @@
+from typing import cast, override
+
 from manim import *
 from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.gtts import GTTSService
@@ -12,6 +14,7 @@ config.disable_caching = True
 
 
 class FactoriseCompletely(VoiceoverScene):
+    @override
     def construct(self):
         self.set_speech_service(RecorderService(device_index=7, rate=48000))
         # self.set_speech_service(GTTSService(lang="en", transcription_model="base"))
@@ -178,6 +181,7 @@ class FactoriseCompletely(VoiceoverScene):
 # FIRST VOICEOVER REELS PROJECT
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 class FirstProject(VoiceoverScene):
+    @override
     def construct(self):
         # self.set_speech_service(RecorderService(device_index=7, rate=48000))
         self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
@@ -250,10 +254,12 @@ class FirstProject(VoiceoverScene):
         with self.voiceover(text=text) as tracker:
             self.wait_until_bookmark("A")
             self.play(
-                Write(problem[0]), run_time=tracker.time_until_bookmark("B"), limit=2
+                Write(cast(VMobject, problem[0])),
+                run_time=tracker.time_until_bookmark("B"),
+                limit=2,
             )
             self.wait_until_bookmark("B")
-            self.play(Write(problem[1]), run_time=2)
+            self.play(Write(cast(VMobject, problem[1])), run_time=2)
         self.play(FadeTransform(problem, title_group))
         self.wait()
         self.play(Write(eq_group[0]))
@@ -280,17 +286,17 @@ class FirstProject(VoiceoverScene):
 
         text = "From the equation, a = 2"
         with self.voiceover(text=text) as tracker:
-            self.play(Write(eq_group[3][0]), run_time=tracker.duration)
+            self.play(Write(cast(VMobject, eq_group[3][0])), run_time=tracker.duration)
         self.wait()
 
         text = "b = -1"
         with self.voiceover(text=text) as tracker:
-            self.play(Write(eq_group[3][1]), run_time=tracker.duration)
+            self.play(Write(cast(VMobject, eq_group[3][1])), run_time=tracker.duration)
         self.wait()
 
         text = "c = -7"
         with self.voiceover(text=text) as tracker:
-            self.play(Write(eq_group[3][-1]), run_time=tracker.duration)
+            self.play(Write(cast(VMobject, eq_group[3][-1])), run_time=tracker.duration)
         self.wait()
 
         text = "We substitute the values of a, b, and c into the quadratic formula"
@@ -356,6 +362,7 @@ class FirstProject(VoiceoverScene):
 # Thumbnail
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 class Thumbnail(Scene):
+    @override
     def construct(self):
         # Add background image
         background = ImageMobject("../Images/chalk_board.jpg")
