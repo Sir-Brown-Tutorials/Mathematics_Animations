@@ -206,7 +206,7 @@ class FirstProject(VoiceoverScene):
         # Problem Statement
         # -----------------------------------------------------------------
         problem = Tex(
-            r"Solve the equation $2x^2 = x + 7$, \\",
+            r"Solve the equation $2x^2 = x + 7$, \\"
             r"giving your answer to two decimal places",
         )
         title = Tex(r"Solve $2x^2 = x = 7$")
@@ -250,33 +250,24 @@ class FirstProject(VoiceoverScene):
         # -----------------------------------------------------------------
 
         # -----------------------------------------------------------------
-        text = "We are given an equation <bookmark mark='A'/>two x squared equals x plus 7, we are required to solve for x and <bookmark mark='B'/>give our answer to two decimal places."
+        text = "We are given an equation two x squared equals x plus 7, we are required to solve for x and give our answer to two decimal places."
         with self.voiceover(text=text) as tracker:
-            self.wait_until_bookmark("A")
-            self.play(
-                Write(cast(VMobject, problem[0])),
-                run_time=tracker.time_until_bookmark("B"),
-                limit=2,
-            )
-            self.wait_until_bookmark("B")
-            self.play(Write(cast(VMobject, problem[1])), run_time=2)
+            self.play(Write(cast(VMobject, problem[0])), run_time=2)
         self.play(FadeTransform(problem, title_group))
         self.wait()
         self.play(Write(eq_group[0]))
 
-        text = "The first step is to write the equation in a standard form of ax to the power 2 plus bx plus c is equal to zero"
+        text = "The first step is to write the equation in a standard form of <bookmark mark='A'/> ax to the power 2 plus bx plus c is equal to zero"
 
         with self.voiceover(text=text) as tracker:
+            self.wait_until_bookmark("A")
             self.play(Write(eq_group[1]), run_time=2)
         self.wait()
 
-        text = (
-            "The equation will transform to 2x squared minus x minus 7 is equal to zero"
-        )
+        text = "The equation will transform to <bookmark mark='A'/> two x squared minus x minus 7 is equal to zero"
         with self.voiceover(text=text) as tracker:
-            self.play(
-                ReplacementTransform(eq_group[1], sub_eq_1), run_time=tracker.duration
-            )
+            self.wait_until_bookmark("A")
+            self.play(ReplacementTransform(eq_group[1], sub_eq_1), run_time=2)
         self.wait()
 
         text = "We will use the quadratic formula"
@@ -284,20 +275,15 @@ class FirstProject(VoiceoverScene):
             self.play(Write(eq_group[2]), run_time=tracker.duration)
         self.wait()
 
-        text = "From the equation, a = 2"
+        text = "From the equation, <bookmark mark='A'/> a = 2, <bookmark mark='B'/> b = -1, and <bookmark mark='C'/> c = -7"
         with self.voiceover(text=text) as tracker:
-            self.play(Write(cast(VMobject, eq_group[3][0])), run_time=tracker.duration)
-        self.wait()
-
-        text = "b = -1"
-        with self.voiceover(text=text) as tracker:
-            self.play(Write(cast(VMobject, eq_group[3][1])), run_time=tracker.duration)
-        self.wait()
-
-        text = "c = -7"
-        with self.voiceover(text=text) as tracker:
-            self.play(Write(cast(VMobject, eq_group[3][-1])), run_time=tracker.duration)
-        self.wait()
+            self.wait_until_bookmark("A")
+            self.play(Write(cast(VMobject, eq_group[3][0])), run_time=1)
+            self.wait_until_bookmark("B")
+            self.play(Write(cast(VMobject, eq_group[3][1])), run_time=1)
+            self.wait_until_bookmark("C")
+            self.play(Write(cast(VMobject, eq_group[3][-1])), run_time=1)
+            self.wait()
 
         text = "We substitute the values of a, b, and c into the quadratic formula"
         with self.voiceover(text=text):
