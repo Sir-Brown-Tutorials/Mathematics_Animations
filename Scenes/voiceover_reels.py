@@ -218,15 +218,15 @@ class FirstProject(VoiceoverScene):
         # -----------------------------------------------------------------
         eq_group = VGroup(
             MathTex(r"2x^2 = x + 7"),
-            MathTex(r"ax^2 + bx + c = 0"),
+            MathTex(r"ax^2 + bx + c = 0").set_color(PURE_YELLOW),
             MathTex(r"x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}"),
-            Tex(r"$a = 2$,", r"$b = -1$,", r"$c = -7$"),
+            Tex(r"$a = 2$, \qquad", r"$b = -1$, \qquad", r"$c = -7$"),
             MathTex(r"x = \frac{-(-1) \pm \sqrt{(-1)^2 - 4(2)(-7)}}{2(2)}"),
-            MathTex(r"x = \frac{1 \pm \sqrt{57}}{4}"),
-            MathTex(r"x = \frac{1 + 7.5498}{4} \approx 2.13745"),
-            Text(r"or", font_size=40, color=RED),
-            MathTex(r"x = \frac{1 - 7.5498}{4} \approx -1.63745"),
-            Tex(r"$x = 2.14$", r" \qquad or \qquad", r"$x = -1.64$"),
+            MathTex(r"x = \frac{1 \pm", r"\sqrt{57}", "}{4}"),
+            MathTex(r"x = \frac{1 + 7.5498}{4}", r" \approx 2.13745"),
+            Text(r"or", font_size=40),
+            MathTex(r"x = \frac{1 - 7.5498}{4}", r" \approx -1.63745"),
+            Tex(r"$x = 2.14$", r" \qquad or \qquad", r" $x = -1.64$"),
         ).arrange(DOWN, buff=0.5)
 
         # -----------------------------------------------------------------
@@ -246,6 +246,20 @@ class FirstProject(VoiceoverScene):
 
         sub_eq_2 = MathTex(r"x = \frac{1 \pm \sqrt{1 + 56}}{4}")
         sub_eq_2.move_to(eq_group[4])
+
+        dig_1 = (
+            MathTex(r"7.5498")
+            .next_to(eq_group[5], UP + 3 * RIGHT)
+            .set_color(PURE_YELLOW)
+        )
+        rectangle_box_3 = SurroundingRectangle(
+            dig_1, buff=0.2, color=PURE_GREEN, corner_radius=0.2
+        )
+        rectangle_box_4 = SurroundingRectangle(sub_eq_1, buff=0.2, color=PURE_GREEN)
+        dig_arrow = Arrow(
+            eq_group[5][-2].get_top(), rectangle_box_3.get_left(), buff=0.2
+        ).set_color(PURE_BLUE)
+        dig_group = VGroup(dig_1, rectangle_box_3, dig_arrow)
 
         # -----------------------------------------------------------------
 
@@ -277,6 +291,7 @@ class FirstProject(VoiceoverScene):
 
         text = "From the equation, <bookmark mark='A'/> a = 2, <bookmark mark='B'/> b = -1, and <bookmark mark='C'/> c = -7"
         with self.voiceover(text=text) as tracker:
+            self.play(Create(rectangle_box_4))
             self.wait_until_bookmark("A")
             self.play(Write(cast(VMobject, eq_group[3][0])), run_time=1)
             self.wait_until_bookmark("B")
@@ -284,37 +299,51 @@ class FirstProject(VoiceoverScene):
             self.wait_until_bookmark("C")
             self.play(Write(cast(VMobject, eq_group[3][-1])), run_time=1)
             self.wait()
-
-        text = "We substitute the values of a, b, and c into the quadratic formula"
+            self.play(FadeOut(rectangle_box_4))
+        self.wait()
+        text = "We substitute the values of a, b, and c into the <bookmark mark='A'/> quadratic formula"
         with self.voiceover(text=text):
-            self.play(Write(eq_group[4]), run_time=2)
-            self.play(ReplacementTransform(eq_group[4], sub_eq_2), run_time=1)
+            self.wait_until_bookmark("A")
+            self.play(TransformFromCopy(eq_group[2], eq_group[4]), run_time=2)
+            self.wait()
+            self.play(ReplacementTransform(eq_group[4], sub_eq_2), run_time=2)
         self.wait()
 
-        text = f"The equation simplifies to {MathTex(r'x = \frac{1 \pm \sqrt{57}}{4}')}"
+        text = "The equation simplifies to <bookmark mark='A'/> x equals 1 plus minus squareroot of 57 over four."
         with self.voiceover(text=text) as tracker:
-            self.play(
-                TransformFromCopy(sub_eq_2, eq_group[5]), run_time=tracker.duration
-            )
+            self.wait_until_bookmark("A")
+            self.play(TransformFromCopy(sub_eq_2, eq_group[5]), run_time=2)
         self.wait()
 
-        text = "Since the squareroot of 57 is equivalent to 7.5498, we get x is equal to 1 plus 7.5498 over 4 which is approximately 2.17745"
+        text = "Since the squareroot of 57 <bookmark mark='A'/> is equivalent to 7.5498, we get <bookmark mark='B'/> x is equal to 1 plus 7.5498 over 4 which is <bookmark mark='C'/> approximately 2.17745"
         with self.voiceover(text=text) as tracker:
-            self.play(Write(eq_group[6]))
+            self.wait_until_bookmark("A")
+            self.play(FadeIn(dig_group))
+            self.wait_until_bookmark("B")
+            self.play(Write(cast(VMobject, eq_group[6][0])))
+            self.wait_until_bookmark("C")
+            self.play(FadeIn(eq_group[6][1]))
         self.wait()
 
-        text = "or x equals 1 minus 7.5498 over 4 which is approximately -1.63745"
+        text = "or <bookmark mark='A'/> x equals 1 minus 7.5498 over 4 which is <bookmark mark='B'/> approximately -1.63745"
         with self.voiceover(text=text) as tracker:
-            self.play(
-                FadeIn(eq_group[7]), Write(eq_group[8]), run_time=tracker.duration
-            )
+            self.play(FadeIn(eq_group[7]))
+            self.wait_until_bookmark("A")
+            self.play(Write(cast(VMobject, eq_group[8][0])), run_time=2)
+            self.wait_until_bookmark("B")
+            self.play(FadeIn(eq_group[8][1]))
+            self.wait()
+            self.play(FadeOut(dig_group))
         self.wait()
 
-        text = "Therefore, our final answer to two decimal places are x = 2.14 or x = -1.64"
+        text = "Therefore,  <bookmark mark='A'/> our final answer to two decimal places are <bookmark mark='B'/> axe = 2.14  <bookmark mark='C'/> or x = -1.64"
         with self.voiceover(text=text) as tracker:
-            self.play(Write(eq_group[9], run_time=2))
-            self.play(Create(rectangle_box_1), run_time=1)
-            self.play(Create(rectangle_box_2), run_time=1)
+            self.wait_until_bookmark("A")
+            self.play(Write(eq_group[9]))
+            self.wait_until_bookmark("B")
+            self.play(Create(rectangle_box_1))
+            self.wait_until_bookmark("C")
+            self.play(Create(rectangle_box_2))
         self.wait()
 
         # -----------------------------------------------------------------
