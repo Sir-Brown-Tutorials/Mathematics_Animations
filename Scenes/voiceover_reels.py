@@ -16,8 +16,8 @@ config.disable_caching = True
 class FactoriseCompletely(VoiceoverScene):
     @override
     def construct(self):
-        self.set_speech_service(RecorderService(device_index=7, rate=48000))
-        # self.set_speech_service(GTTSService(lang="en", transcription_model="base"))
+        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
 
         title = Text("Factorise Completely", font_size=40, color=BLUE).to_edge(UP)
 
@@ -183,8 +183,8 @@ class FactoriseCompletely(VoiceoverScene):
 class FirstProject(VoiceoverScene):
     @override
     def construct(self):
-        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
-        self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
+        self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        # self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
 
         # -----------------------------------------------------------------
         # Create a custom Latex template that includes the cancel package
@@ -315,7 +315,7 @@ class FirstProject(VoiceoverScene):
             self.play(TransformFromCopy(sub_eq_2, eq_group[5]), run_time=2)
         self.wait()
 
-        text = "Since the squareroot of 57 <bookmark mark='A'/> is equivalent to 7.5498, we get <bookmark mark='B'/> x is equal to 1 plus 7.5498 over 4 which is <bookmark mark='C'/> approximately 2.17745"
+        text = "Since the squareroot of 57 <bookmark mark='A'/>is equivalent to 7.5498, we get <bookmark mark='B'/>axe is equal to 1 plus 7.5498 over 4 which is <bookmark mark='C'/>approximately 2.13745"
         with self.voiceover(text=text) as tracker:
             self.wait_until_bookmark("A")
             self.play(FadeIn(dig_group))
@@ -325,7 +325,7 @@ class FirstProject(VoiceoverScene):
             self.play(FadeIn(eq_group[6][1]))
         self.wait()
 
-        text = "or <bookmark mark='A'/> x equals 1 minus 7.5498 over 4 which is <bookmark mark='B'/> approximately -1.63745"
+        text = "or <bookmark mark='A'/>axe equals 1 minus 7.5498 over 4 which is <bookmark mark='B'/>approximately -1.63745"
         with self.voiceover(text=text) as tracker:
             self.play(FadeIn(eq_group[7]))
             self.wait_until_bookmark("A")
@@ -336,7 +336,7 @@ class FirstProject(VoiceoverScene):
             self.play(FadeOut(dig_group))
         self.wait()
 
-        text = "Therefore,  <bookmark mark='A'/> our final answer to two decimal places are <bookmark mark='B'/> axe = 2.14  <bookmark mark='C'/> or x = -1.64"
+        text = "Therefore,  <bookmark mark='A'/>our final answer to two decimal places is <bookmark mark='B'/>axe = 2.14  <bookmark mark='C'/>or x = -1.64"
         with self.voiceover(text=text) as tracker:
             self.wait_until_bookmark("A")
             self.play(Write(eq_group[9]))
