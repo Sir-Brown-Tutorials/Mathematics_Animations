@@ -400,7 +400,7 @@ class Thumbnail(Scene):
         # Formula
         formula = (
             MathTex(
-                r"2^{2x} + 32 = 3(2^{x + 2})",
+                r"2x^2 = x + 7",
                 color=WHITE,
             )
             .scale(1.5)
