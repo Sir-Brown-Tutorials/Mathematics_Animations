@@ -381,8 +381,8 @@ class FirstProject(VoiceoverScene):
 class SecondProject(VoiceoverScene):
     @override
     def construct(self):
-        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
-        self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
+        self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        # self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
 
         # -----------------------------------------------------------------
         # Create a custom Latex template that includes the cancel package
@@ -482,7 +482,7 @@ class SecondProject(VoiceoverScene):
         # -----------------------------------------------------------------
 
         # -----------------------------------------------------------------
-        text = "We are going to factorise completely the expression two a squared u, minus six a u, minus twenty u."
+        text = "We are going to factorise completely the expression two A squared U, minus six A U, minus twenty U."
         with self.voiceover(text=text) as tracker:
             self.play(Write(problem), run_time=2)
         self.wait()
