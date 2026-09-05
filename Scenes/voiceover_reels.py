@@ -1,4 +1,6 @@
+from turtle import circle
 from typing import cast, override
+from venv import create
 
 from manim import *
 from manim_voiceover import VoiceoverScene
@@ -361,6 +363,281 @@ class FirstProject(VoiceoverScene):
                     rectangle_box_2,
                     sub_eq_1,
                     sub_eq_2,
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+# SECOND VOICEOVER REELS PROJECT
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+class SecondProject(VoiceoverScene):
+    @override
+    def construct(self):
+        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
+
+        # -----------------------------------------------------------------
+        # Create a custom Latex template that includes the cancel package
+        # -----------------------------------------------------------------
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # -----------------------------------------------------------------
+        # Load and position logo image
+        # -----------------------------------------------------------------
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.15)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # -----------------------------------------------------------------
+        # Problem Statement
+        # -----------------------------------------------------------------
+        problem = Tex(r"Factorise Completely", r" $2a^2u - 6au - 20u$.")
+        problem[-1].set_color(PURE_YELLOW)
+        title = Tex(r"Factorise $2a^2u - 6au - 20u$")
+        underline = Underline(title)
+        title_group = VGroup(title, underline).to_edge(UP).scale(1.5).set_color(YELLOW)
+
+        # -----------------------------------------------------------------
+        # Equation group
+        # -----------------------------------------------------------------
+        eq_group = VGroup(
+            MathTex(r"2a^2u - 6au - 20u"),
+            MathTex(r"2u", r"\; a^2 - ", "2u", r"\; (3a) - ", "2u", r"\;(10)"),
+            MathTex(r"2u \:", r"( \;", r"a^2", " - 3a", " - 10", r"\; )"),
+            MathTex(r"a^2 \;", r" - 3a", r"\;", r" - 10"),
+            MathTable(
+                [[r"-5 \times 2 = -10", r"-5 + 2 = -3"]],
+                col_labels=[Text("Product"), Text("Sum")],
+            ).scale(0.75),
+            MathTex(r"a^2 - 5a", r" + ", r"2a - 10"),
+            MathTex(r"a \;", "(a - 5)", r"+2 \; ", "(a - 5)"),
+            MathTex(r"(a - 5) \; (a + 2)"),
+            MathTex(r"2u \;", r" (a - 5) \; (a + 2)"),
+        ).arrange(DOWN, buff=0.85)
+        eq_group[1][0].set_color(PURE_GREEN)
+        eq_group[1][2].set_color(PURE_GREEN)
+        eq_group[1][-2].set_color(PURE_GREEN)
+
+        # -----------------------------------------------------------------
+        # Adding Braces and their labels
+        # -----------------------------------------------------------------
+        brace_1 = Brace(eq_group[5][0], DOWN, buff=0.025)
+        label_1 = (
+            brace_1.get_tex(r"\text{Group 1}", buff=0).scale(0.75).set_color(PURE_GREEN)
+        )
+        brace_1_group = VGroup(brace_1, label_1)
+
+        brace_2 = Brace(eq_group[5][-1], DOWN, buff=0.025)
+        label_2 = (
+            brace_2.get_tex(r"\text{Group 2}", buff=0).scale(0.75).set_color(PURE_GREEN)
+        )
+        brace_2_group = VGroup(brace_2, label_2)
+        # -----------------------------------------------------------------
+
+        # -----------------------------------------------------------------
+        rectangle_box_1 = SurroundingRectangle(
+            VGroup(
+                cast(VMobject, eq_group[2][2]),
+                cast(VMobject, eq_group[2][3]),
+                cast(VMobject, eq_group[2][4]),
+            ),
+            buff=0.1,
+            color=PURE_YELLOW,
+        )
+        rectangle_box_2 = SurroundingRectangle(
+            eq_group[8], buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+        dig_1 = (
+            Tex(r"$-5$ and $2$")
+            .next_to(eq_group[3], DOWN + 3 * RIGHT)
+            .set_color(PURE_YELLOW)
+        )
+        # # -----------------------------------------------------------------
+        #
+        # # -----------------------------------------------------------------
+        rectangle_box_3 = SurroundingRectangle(
+            eq_group[6][1], buff=0.1, color=PURE_YELLOW
+        )
+        rectangle_box_4 = SurroundingRectangle(
+            eq_group[6][-1], buff=0.1, color=PURE_YELLOW
+        )
+        rectangle_box_5 = SurroundingRectangle(
+            eq_group[3][1], buff=0.1, color=PURE_YELLOW
+        )
+        rectangle_box_6 = SurroundingRectangle(
+            eq_group[2][0], buff=0.1, color=PURE_YELLOW
+        )
+        # -----------------------------------------------------------------
+
+        # -----------------------------------------------------------------
+        text = "We are going to factorise completely the expression two a squared u, minus six a u, minus twenty u."
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(problem), run_time=2)
+        self.wait()
+        self.play(FadeTransform(problem, title_group))
+        self.wait()
+        self.play(Write(eq_group[0]))
+        self.wait()
+        text = "First, we look for the heighest common factor of all three terms. Each term contains <bookmark mark='A'/> two U. Therefore, the highest common factor is two U."
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[1]))
+            self.wait_until_bookmark("A")
+            for item in VGroup(
+                cast(VMobject, eq_group[1][0]),
+                cast(VMobject, eq_group[1][2]),
+                cast(VMobject, eq_group[1][-2]),
+            ):
+                self.play(Circumscribe(item, Circle))
+        self.wait()
+        text = "Taking two U outside the brackets leaves A <bookmark mark='A'/> squared, minus three A, and minus ten inside the brackets"
+        with self.voiceover(text=text) as tracker:
+            self.play(
+                TransformFromCopy(
+                    VGroup(
+                        cast(VMobject, eq_group[1][0]),
+                        cast(VMobject, eq_group[1][2]),
+                        cast(VMobject, eq_group[1][-2]),
+                    ),
+                    eq_group[2][0],
+                ),
+            )
+            self.wait_until_bookmark("A")
+            self.play(
+                TransformFromCopy(eq_group[1][1], eq_group[2][2]),
+                TransformFromCopy(eq_group[1][3], eq_group[2][3]),
+                TransformFromCopy(eq_group[1][-1], eq_group[2][4]),
+                Write(cast(VMobject, eq_group[2][1])),
+                Write(cast(VMobject, eq_group[2][-1])),
+                run_time=2,
+            )
+            self.wait()
+        self.wait()
+        text = "We now need to factorise the quadratic expression <bookmark mark='A'/> A squared, minus three A, minus ten "
+        with self.voiceover(text=text) as tracker:
+            self.play(Create(rectangle_box_1))
+            self.wait_until_bookmark("A")
+            self.play(
+                TransformFromCopy(
+                    VGroup(
+                        cast(VMobject, eq_group[2][2]),
+                        cast(VMobject, eq_group[2][3]),
+                        cast(VMobject, eq_group[2][4]),
+                    ),
+                    eq_group[3],
+                ),
+                FadeOut(rectangle_box_1),
+            )
+        self.wait()
+        text = """We need two numbers whose product is <bookmark mark='A'/> negative ten and whose sum is <bookmark mark='B'/> negative three. 
+                The two numbers are <bookmark mark='C'/> negative five and positive two, because  <bookmark mark='D'/> negative five times two is negative ten, and negative five plus two is negative three"""
+        with self.voiceover(text=text) as tracker:
+            self.wait_until_bookmark("A")
+            self.play(Circumscribe(eq_group[3][-1], Circle))
+            self.wait_until_bookmark("B")
+            self.play(Circumscribe(eq_group[3][1], Circle))
+            self.wait_until_bookmark("C")
+            self.play(FadeIn(dig_1))
+            self.wait_until_bookmark("D")
+            self.play(Create(eq_group[4]))
+        self.wait()
+
+        text = "We use these numbers to split <bookmark mark='A'/> the middle term. Negative three becomes <bookmark mark='B'/> negative five A plus two A"
+        with self.voiceover(text=text) as tracker:
+            self.wait_until_bookmark("A")
+            self.play(Create(rectangle_box_5))
+            self.wait_until_bookmark("B")
+            self.play(Write(eq_group[5]))
+        self.wait()
+
+        text = "Now we group the <bookmark mark='A'/> first two terms together and the <bookmark mark='B'/> last two terms together"
+        with self.voiceover(text=text) as tracker:
+            self.wait_until_bookmark("A")
+            self.play(GrowFromCenter(brace_1_group), FadeOut(rectangle_box_5))
+            self.wait_until_bookmark("B")
+            self.play(GrowFromCenter(brace_2_group))
+        self.wait()
+
+        text = "From the first group, <bookmark mark='A'/> we take out A, giving A times A minus five. From the second group, <bookmark mark='B'/> we takeout two, giving two times A minus five."
+        with self.voiceover(text=text) as tracker:
+            self.wait_until_bookmark("A")
+            self.play(
+                TransformFromCopy(
+                    eq_group[5][0],
+                    VGroup(
+                        cast(VMobject, eq_group[6][0]), cast(VMobject, eq_group[6][1])
+                    ),
+                )
+            )
+            self.wait_until_bookmark("B")
+            self.play(
+                TransformFromCopy(
+                    eq_group[5][-1],
+                    VGroup(
+                        cast(VMobject, eq_group[6][-2]), cast(VMobject, eq_group[6][-1])
+                    ),
+                )
+            )
+        self.wait()
+
+        text = "Notice that both terms now contain the common factor <bookmark mark='A'/> A minus five."
+        with self.voiceover(text=text) as tracker:
+            self.play(FadeOut(VGroup(brace_1_group, brace_2_group)))
+            self.wait_until_bookmark("A")
+            self.play(
+                Create(VGroup(rectangle_box_3, rectangle_box_4)),
+            )
+        self.wait()
+        text = "Taking A minus five as the common factor, leaves us with <bookmark mark='A'/> A minus five multiplied by A plus two"
+        with self.voiceover(text=text) as tracker:
+            self.wait_until_bookmark("A")
+            self.play(
+                FadeOut(VGroup(rectangle_box_3, rectangle_box_4)), Write(eq_group[7])
+            )
+
+        text = "Remember we left out <bookmark mark='A'/> two U earlier. Therefore, the expression factorises completely to <bookmark mark='B'/> two U, multiplied by <bookmark mark='C'/> A minus five, multiplied by A plus two."
+        with self.voiceover(text=text) as tracker:
+            self.wait_until_bookmark("A")
+            self.play(Create(rectangle_box_6))
+            self.wait_until_bookmark("B")
+            self.play(
+                TransformFromCopy(eq_group[2][0], eq_group[8][0]),
+            )
+            self.wait_until_bookmark("C")
+            self.play(FadeOut(rectangle_box_6), Write(cast(VMobject, eq_group[8][-1])))
+        self.wait()
+        self.play(Create(rectangle_box_2))
+        self.wait()
+
+        # -----------------------------------------------------------------
+        # Outro
+        # -----------------------------------------------------------------
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    title_group,
+                    eq_group,
+                    dig_1,
+                    # brace_1_group,
+                    # brace_2_group,
+                    # problem,
+                    # rectangle_box_1,
+                    rectangle_box_2,
+                    # sub_eq_1,
+                    # sub_eq_2,
                 )
             ),
         )
