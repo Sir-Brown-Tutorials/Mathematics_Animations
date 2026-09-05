@@ -631,13 +631,7 @@ class SecondProject(VoiceoverScene):
                     title_group,
                     eq_group,
                     dig_1,
-                    # brace_1_group,
-                    # brace_2_group,
-                    # problem,
-                    # rectangle_box_1,
                     rectangle_box_2,
-                    # sub_eq_1,
-                    # sub_eq_2,
                 )
             ),
         )
@@ -665,19 +659,17 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Solve", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Factorise", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = (
-            Tex(r"\text{for} \textbf{x}").scale(1.5).next_to(title, DOWN, buff=0.75)
-        )
+        subtitle = Tex(r"\text{Completely}").scale(1.5).next_to(title, DOWN, buff=0.75)
 
         # Formula
         formula = (
             MathTex(
-                r"2x^2 = x + 7",
+                r"2a^2u - 6au - 20u",
                 color=WHITE,
             )
             .scale(1.5)
