@@ -645,6 +645,174 @@ class SecondProject(VoiceoverScene):
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
+# THIRD VOICEOVER REELS PROJECT
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+class ThirdProject(VoiceoverScene):
+    @override
+    def construct(self):
+        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
+
+        # -----------------------------------------------------------------
+        # Create a custom Latex template that includes the cancel package
+        # -----------------------------------------------------------------
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # -----------------------------------------------------------------
+        # Load and position logo image
+        # -----------------------------------------------------------------
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.15)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # -----------------------------------------------------------------
+        # Problem Statement
+        # -----------------------------------------------------------------
+        problem = Tex(
+            r"Make $y$ the subject of the formula \\[1em]",
+            r"$m = \frac{by^2}{a + y^2}$",
+        )
+        problem[-1].scale(1.5)
+        title = Tex(r"Make \boxed{$y$} the subject of formula")
+        underline = Underline(title)
+        title_group = VGroup(title, underline).to_edge(UP).scale(1.25).set_color(YELLOW)
+
+        # -----------------------------------------------------------------
+        # Equation group
+        # -----------------------------------------------------------------
+        eq_group = VGroup(
+            MathTex(r"\boxed{m = \frac{by^2}{a + y^2}}"),
+            MathTex(r"m(a + y^2) = by^2"),
+            MathTex(r"am + my^2 = by^2"),
+            MathTex(r"am = by^2 - my^2"),
+            MathTex(r"am = y^2(b - m)"),
+            MathTex(r"y^2 = \frac{am}{b - m}"),
+            MathTex(r"y = \pm \sqrt{\frac{am}{b - m}}"),
+        ).arrange(DOWN, buff=1, aligned_edge=LEFT)
+
+        # -----------------------------------------------------------------
+        # Adding Braces and their labels
+        # -----------------------------------------------------------------
+        # brace_1 = Brace(eq_group[5][0], DOWN, buff=0.025)
+        # label_1 = (
+        #     brace_1.get_tex(r"\text{Group 1}", buff=0).scale(0.75).set_color(PURE_GREEN)
+        # )
+        # brace_1_group = VGroup(brace_1, label_1)
+        #
+        # brace_2 = Brace(eq_group[5][-1], DOWN, buff=0.025)
+        # label_2 = (
+        #     brace_2.get_tex(r"\text{Group 2}", buff=0).scale(0.75).set_color(PURE_GREEN)
+        # )
+        # brace_2_group = VGroup(brace_2, label_2)
+        # # -----------------------------------------------------------------
+        #
+        # # -----------------------------------------------------------------
+        # rectangle_box_1 = SurroundingRectangle(
+        #     VGroup(
+        #         cast(VMobject, eq_group[2][2]),
+        #         cast(VMobject, eq_group[2][3]),
+        #         cast(VMobject, eq_group[2][4]),
+        #     ),
+        #     buff=0.1,
+        #     color=PURE_YELLOW,
+        # )
+        rectangle_box_2 = SurroundingRectangle(
+            eq_group[6], buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+        # dig_1 = (
+        #     Tex(r"$-5$ and $2$")
+        #     .next_to(eq_group[3], DOWN + 3 * RIGHT)
+        #     .set_color(PURE_YELLOW)
+        # )
+        # # # -----------------------------------------------------------------
+        # #
+        # # # -----------------------------------------------------------------
+        # rectangle_box_3 = SurroundingRectangle(
+        #     eq_group[6][1], buff=0.1, color=PURE_YELLOW
+        # )
+        # rectangle_box_4 = SurroundingRectangle(
+        #     eq_group[6][-1], buff=0.1, color=PURE_YELLOW
+        # )
+        # rectangle_box_5 = SurroundingRectangle(
+        #     eq_group[3][1], buff=0.1, color=PURE_YELLOW
+        # )
+        # rectangle_box_6 = SurroundingRectangle(
+        #     eq_group[2][0], buff=0.1, color=PURE_YELLOW
+        # )
+        # -----------------------------------------------------------------
+        # Voiceovers and Animations
+        # -----------------------------------------------------------------
+        text = "We are given the formula M equals B Y squared divided by A plus Y squared. We want to make M the subject of the formula."
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(problem), run_time=2)
+            self.wait()
+        self.play(FadeTransform(problem, title_group))
+        self.wait()
+        self.play(FadeIn(eq_group[0]))
+        self.wait()
+
+        text = "First, we need to eliminate the denominator. So, we multiply both sides by A plus Y squared. This gives us M multiplied by A plus Y squared, equal to B Y squared."
+        with self.voiceover(text=text) as tracker:
+            self.play(Write(eq_group[1]))
+            self.wait()
+
+        text = "Next, we expand the brackets. M multiplied by A gives A M, while M multiplied by Y squared gives M Y squared. Therefore, A M plus M Y squared equals B Y squared."
+        with self.voiceover(text=text) as tracker:
+            self.play(TransformFromCopy(eq_group[1], eq_group[2]))
+            self.wait()
+
+        text = "Now, we want to collect the terms containing Y squared on one side. Subtract M Y squared from both sides. We are left with A M equals B Y squared minus M Y squared."
+        with self.voiceover(text=text) as tracker:
+            self.play(TransformFromCopy(eq_group[2], eq_group[3]))
+            self.wait()
+
+        text = "Both terms on the right contain Y squared. So, we factor out Y squared. This gives us A M equals B minus M, multiplied by Y squared."
+        with self.voiceover(text=text) as tracker:
+            self.play(TransformFromCopy(eq_group[3], eq_group[4]))
+            self.wait()
+
+        text = "To make Y squared the subject, we divide both sides by B minus M. Therefore, Y squared equals A M divided by B minus M."
+        with self.voiceover(text=text) as tracker:
+            self.play(TransformFromCopy(eq_group[4], eq_group[5]))
+            self.wait()
+
+        text = """Finally, we take the square root of both sides. Since the square root of a squared quantity can be positive or negative, 
+           we include the plus or minus sign. Therefore, Y equals plus or minus the square root of A M divided by B minus M."""
+        with self.voiceover(text=text) as tracker:
+            self.play(TransformFromCopy(eq_group[5], eq_group[6]))
+            self.wait()
+
+        self.play(Create(rectangle_box_2))
+        self.wait(5)
+        # -----------------------------------------------------------------
+        # Outro
+        # -----------------------------------------------------------------
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    title_group,
+                    eq_group,
+                    # dig_1,
+                    rectangle_box_2,
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
 # Thumbnail
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 class Thumbnail(Scene):
@@ -659,17 +827,22 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Factorise", font="Roboto", weight=BOLD, color=YELLOW)
+            Text(r"Change the Subject", font="Roboto", weight=BOLD, color=PURE_YELLOW)
             .scale(1.5)
             .shift(UP * 3)
         )
         # Subtitle
-        subtitle = Tex(r"\text{Completely}").scale(1.5).next_to(title, DOWN, buff=0.75)
+        subtitle = (
+            Tex(r"\text{of formula}")
+            .scale(2)
+            .set_color(YELLOW)
+            .next_to(title, DOWN, buff=0.75)
+        )
 
         # Formula
         formula = (
             MathTex(
-                r"2a^2u - 6au - 20u",
+                r"m = \frac{by^2}{a + y^2}",
                 color=WHITE,
             )
             .scale(1.5)
