@@ -1,6 +1,5 @@
 from turtle import circle
 from typing import cast, override
-from venv import create
 
 from manim import *
 from manim_voiceover import VoiceoverScene
@@ -686,10 +685,10 @@ class ThirdProject(VoiceoverScene):
         # -----------------------------------------------------------------
         eq_group = VGroup(
             MathTex(r"\boxed{m = \frac{by^2}{a + y^2}}"),
-            MathTex(r"m(a + y^2) = by^2"),
-            MathTex(r"am + my^2 = by^2"),
-            MathTex(r"am = by^2 - my^2"),
-            MathTex(r"am = y^2(b - m)"),
+            MathTex(r"m \;", r"( \;", r"a", r"\; + \;", r"y^2 \;", ")", r" = by^2"),
+            MathTex(r"am", r"+ my^2", r"= by^2"),
+            MathTex(r"am =", r"b\;", r"y^2", r"- m \;", r"y^2"),
+            MathTex(r"am = ", r"(b - m)", r"y^2"),
             MathTex(r"y^2 = \frac{am}{b - m}"),
             MathTex(r"y = \pm \sqrt{\frac{am}{b - m}}"),
         ).arrange(DOWN, buff=1, aligned_edge=LEFT)
@@ -697,6 +696,21 @@ class ThirdProject(VoiceoverScene):
         # -----------------------------------------------------------------
         # Adding Braces and their labels
         # -----------------------------------------------------------------
+        eq_1 = MathTex(
+            r"(a + y^2) \times m = \frac{b - k^3}{\cancel{(a + y^2)}} \times \cancel{(a + y^2)}",
+            tex_template=my_template,
+        )
+        eq_1.move_to(eq_group[1])
+
+        eq_2 = MathTex(r"am + my^2 - my^2 = by^2 - by^2")
+        eq_2.move_to(eq_group[3])
+        eq_3 = MathTex(
+            r"\frac{am}{b - m} = \frac{\cancel{(b - m)}y^2}{\cancel{(b - m)}}",
+            tex_template=my_template,
+        )
+        eq_3.move_to(eq_group[5])
+        eq_4 = MathTex(r"\sqrt{y^2} = \pm \sqrt{\frac{am}{b - m}}")
+        eq_4.move_to(eq_group[6])
         # brace_1 = Brace(eq_group[5][0], DOWN, buff=0.025)
         # label_1 = (
         #     brace_1.get_tex(r"\text{Group 1}", buff=0).scale(0.75).set_color(PURE_GREEN)
@@ -723,6 +737,19 @@ class ThirdProject(VoiceoverScene):
         rectangle_box_2 = SurroundingRectangle(
             eq_group[6], buff=0.2, color=PURE_RED, corner_radius=0.2
         )
+
+        arrow_1 = CurvedArrow(
+            eq_group[1][0].get_top(),
+            eq_group[1][2].get_top(),
+            angle=-TAU / 4,
+            color=PURE_GREEN,
+        )
+        arrow_2 = CurvedArrow(
+            eq_group[1][0].get_top(),
+            eq_group[1][4].get_top(),
+            angle=-TAU / 4,
+            color=PURE_BLUE,
+        )
         # dig_1 = (
         #     Tex(r"$-5$ and $2$")
         #     .next_to(eq_group[3], DOWN + 3 * RIGHT)
@@ -746,7 +773,7 @@ class ThirdProject(VoiceoverScene):
         # -----------------------------------------------------------------
         # Voiceovers and Animations
         # -----------------------------------------------------------------
-        text = "We are given the formula M equals B Y squared divided by A plus Y squared. We want to make M the subject of the formula."
+        text = "We are given the formula M equals B Y squared divided by A plus Y squared. We want to make Y the subject of the formula."
         with self.voiceover(text=text) as tracker:
             self.play(Write(problem), run_time=2)
             self.wait()
@@ -755,39 +782,95 @@ class ThirdProject(VoiceoverScene):
         self.play(FadeIn(eq_group[0]))
         self.wait()
 
-        text = "First, we need to eliminate the denominator. So, we multiply both sides by A plus Y squared. This gives us M multiplied by A plus Y squared, equal to B Y squared."
+        text = """First, we need to eliminate the denominator. So, <bookmark mark='A'/> we multiply both sides by A plus Y squared. 
+        This gives us <bookmark mark='B'/> eeM multiplied by A plus Y squared, equal to B Y squared."""
         with self.voiceover(text=text) as tracker:
-            self.play(Write(eq_group[1]))
+            self.wait_until_bookmark("A")
+            self.play(Write(eq_1))
+            self.wait_until_bookmark("B")
+            self.play(Transform(eq_1, eq_group[1]))
             self.wait()
 
-        text = "Next, we expand the brackets. M multiplied by A gives A M, while M multiplied by Y squared gives M Y squared. Therefore, A M plus M Y squared equals B Y squared."
+        text = """Next, we expand the brackets. <bookmark mark='A'/> eeM multiplied by A gives A M, while <bookmark mark='B'/> eeM multiplied by Y squared gives M Y squared. 
+        Therefore, A M plus M Y squared <bookmark mark='C'/> equals B Y squared."""
         with self.voiceover(text=text) as tracker:
-            self.play(TransformFromCopy(eq_group[1], eq_group[2]))
+            self.wait_until_bookmark("A")
+            self.play(
+                Create(arrow_1),
+                TransformFromCopy(
+                    VGroup(
+                        cast(VMobject, eq_group[1][0]), cast(VMobject, eq_group[1][2])
+                    ),
+                    eq_group[2][0],
+                ),
+            )
+            self.wait_until_bookmark("B")
+            self.play(
+                Create(arrow_2),
+                TransformFromCopy(
+                    VGroup(
+                        cast(VMobject, eq_group[1][0]), cast(VMobject, eq_group[1][4])
+                    ),
+                    eq_group[2][1],
+                ),
+            )
+            self.wait_until_bookmark("C")
+            self.play(TransformFromCopy(eq_group[1][-1], eq_group[2][-1]))
             self.wait()
 
-        text = "Now, we want to collect the terms containing Y squared on one side. Subtract M Y squared from both sides. We are left with A M equals B Y squared minus M Y squared."
+        text = """Now, we want to collect the terms containing Y squared on one side. <bookmark mark='A'/> Subtract M Y squared from both sides. 
+                We are left with  <bookmark mark='B'/> eeA M equals B Y squared minus M Y squared."""
         with self.voiceover(text=text) as tracker:
-            self.play(TransformFromCopy(eq_group[2], eq_group[3]))
+            self.wait_until_bookmark("A")
+            self.play(TransformFromCopy(eq_group[2], eq_2))
+            self.wait_until_bookmark("B")
+            self.play(Transform(eq_2, eq_group[3]))
             self.wait()
 
-        text = "Both terms on the right contain Y squared. So, we factor out Y squared. This gives us A M equals B minus M, multiplied by Y squared."
+        text = "Both terms on the right contain <bookmark mark='A'/> Y squared. So, we factor out <bookmark mark='B'/> Y squared. This gives us <bookmark mark='C'/> eeA M equals B minus M, multiplied by Y squared."
         with self.voiceover(text=text) as tracker:
-            self.play(TransformFromCopy(eq_group[3], eq_group[4]))
+            self.wait_until_bookmark("A")
+            self.play(Circumscribe(eq_group[3][2]), Circumscribe(eq_group[3][-1]))
+            self.wait_until_bookmark("B")
+            self.play(
+                TransformFromCopy(
+                    VGroup(
+                        cast(VMobject, eq_group[3][2]), cast(VMobject, eq_group[3][-1])
+                    ),
+                    eq_group[4][-1],
+                )
+            )
+            self.play(
+                TransformFromCopy(
+                    VGroup(
+                        cast(VMobject, eq_group[3][1]), cast(VMobject, eq_group[3][-2])
+                    ),
+                    eq_group[4][1],
+                )
+            )
+            self.wait_until_bookmark("C")
+            self.play(TransformFromCopy(eq_group[3][0], eq_group[4][0]))
             self.wait()
 
-        text = "To make Y squared the subject, we divide both sides by B minus M. Therefore, Y squared equals A M divided by B minus M."
+        text = "To make Y squared the subject, we divide both sides by <bookmark mark='A'/> B minus M. Therefore, <bookmark mark='B'/> Y squared equals A M divided by B minus M."
         with self.voiceover(text=text) as tracker:
-            self.play(TransformFromCopy(eq_group[4], eq_group[5]))
+            self.wait_until_bookmark("A")
+            self.play(TransformFromCopy(eq_group[4], eq_3))
+            self.wait_until_bookmark("B")
+            self.play(Transform(eq_3, eq_group[5]))
             self.wait()
 
-        text = """Finally, we take the square root of both sides. Since the square root of a squared quantity can be positive or negative, 
-           we include the plus or minus sign. Therefore, Y equals plus or minus the square root of A M divided by B minus M."""
+        text = """Finally, we take the <bookmark mark='A'/> square root of both sides. Since the square root of a squared quantity can be positive or negative, 
+           we include the plus or minus sign. Therefore, <bookmark mark='B'/> Y equals plus or minus the square root of A M divided by B minus M."""
         with self.voiceover(text=text) as tracker:
-            self.play(TransformFromCopy(eq_group[5], eq_group[6]))
+            self.wait_until_bookmark("A")
+            self.play(TransformFromCopy(eq_group[5], eq_4))
+            self.wait_until_bookmark("B")
+            self.play(Transform(eq_4, eq_group[6]))
             self.wait()
 
         self.play(Create(rectangle_box_2))
-        self.wait(5)
+        self.wait()
         # -----------------------------------------------------------------
         # Outro
         # -----------------------------------------------------------------
@@ -798,8 +881,13 @@ class ThirdProject(VoiceoverScene):
                 VGroup(
                     title_group,
                     eq_group,
-                    # dig_1,
+                    eq_1,
+                    eq_2,
+                    eq_3,
+                    eq_4,
                     rectangle_box_2,
+                    arrow_1,
+                    arrow_2,
                 )
             ),
         )
