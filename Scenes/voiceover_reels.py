@@ -649,8 +649,8 @@ class SecondProject(VoiceoverScene):
 class ThirdProject(VoiceoverScene):
     @override
     def construct(self):
-        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
-        self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
+        self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        # self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
 
         # -----------------------------------------------------------------
         # Create a custom Latex template that includes the cancel package
@@ -747,7 +747,7 @@ class ThirdProject(VoiceoverScene):
             self.play(Write(eq_1))
             self.wait_until_bookmark("B")
             self.play(Transform(eq_1, eq_group[1]))
-            self.wait()
+        self.wait()
 
         text = """Next, we expand the brackets. <bookmark mark='A'/> M multiplied by A gives A M, while <bookmark mark='B'/> M multiplied by Y squared gives M Y squared. 
         Therefore, A M plus M Y squared <bookmark mark='C'/> equals B Y squared."""
@@ -774,7 +774,7 @@ class ThirdProject(VoiceoverScene):
             )
             self.wait_until_bookmark("C")
             self.play(TransformFromCopy(eq_group[1][-1], eq_group[2][-1]))
-            self.wait()
+        self.wait()
 
         text = """Now, we want to collect the terms containing Y squared on one side. <bookmark mark='A'/> Subtract M Y squared from both sides. 
                 We are left with  <bookmark mark='B'/> A M equals B Y squared minus M Y squared."""
@@ -783,7 +783,7 @@ class ThirdProject(VoiceoverScene):
             self.play(TransformFromCopy(eq_group[2], eq_2))
             self.wait_until_bookmark("B")
             self.play(Transform(eq_2, eq_group[3]))
-            self.wait()
+        self.wait()
 
         text = "Both terms on the right contain <bookmark mark='A'/> Y squared. So, we factor out <bookmark mark='B'/> Y squared. This gives us <bookmark mark='C'/> A M equals B minus M, multiplied by Y squared."
         with self.voiceover(text=text) as tracker:
@@ -808,7 +808,7 @@ class ThirdProject(VoiceoverScene):
             )
             self.wait_until_bookmark("C")
             self.play(TransformFromCopy(eq_group[3][0], eq_group[4][0]))
-            self.wait()
+        self.wait()
 
         text = "To make Y squared the subject, we divide both sides by <bookmark mark='A'/> B minus M. Therefore, <bookmark mark='B'/> Y squared equals A M divided by B minus M."
         with self.voiceover(text=text) as tracker:
@@ -816,7 +816,7 @@ class ThirdProject(VoiceoverScene):
             self.play(TransformFromCopy(eq_group[4], eq_3))
             self.wait_until_bookmark("B")
             self.play(Transform(eq_3, eq_group[5]))
-            self.wait()
+        self.wait()
 
         text = """Finally, we take the <bookmark mark='A'/> square root of both sides. Since the square root of a squared quantity can be positive or negative, 
            we include the plus or minus sign. Therefore, <bookmark mark='B'/> Y equals plus or minus the square root of A M divided by B minus M."""
