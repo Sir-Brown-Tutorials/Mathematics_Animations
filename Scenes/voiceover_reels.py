@@ -702,7 +702,9 @@ class ThirdProject(VoiceoverScene):
         )
         eq_1.move_to(eq_group[1])
 
-        eq_2 = MathTex(r"am + my^2 - my^2 = by^2 - by^2")
+        eq_2 = MathTex(r"am + my^2 -", r"my^2", r" = by^2 - ", r"my^2")
+        eq_2[1].set_color(PURE_BLUE)
+        eq_2[-1].set_color(PURE_BLUE)
         eq_2.move_to(eq_group[3])
         eq_3 = MathTex(
             r"\frac{am}{b - m} = \frac{\cancel{(b - m)}y^2}{\cancel{(b - m)}}",
