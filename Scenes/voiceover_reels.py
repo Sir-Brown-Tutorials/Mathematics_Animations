@@ -741,7 +741,7 @@ class ThirdProject(VoiceoverScene):
         self.wait()
 
         text = """First, we need to eliminate the denominator. So, <bookmark mark='A'/> we multiply both sides by A plus Y squared. 
-        This gives us <bookmark mark='B'/> eeM multiplied by A plus Y squared, equal to B Y squared."""
+        This gives us <bookmark mark='B'/> M multiplied by A plus Y squared, equal to B Y squared."""
         with self.voiceover(text=text) as tracker:
             self.wait_until_bookmark("A")
             self.play(Write(eq_1))
@@ -749,7 +749,7 @@ class ThirdProject(VoiceoverScene):
             self.play(Transform(eq_1, eq_group[1]))
             self.wait()
 
-        text = """Next, we expand the brackets. <bookmark mark='A'/> eeM multiplied by A gives A M, while <bookmark mark='B'/> eeM multiplied by Y squared gives M Y squared. 
+        text = """Next, we expand the brackets. <bookmark mark='A'/> M multiplied by A gives A M, while <bookmark mark='B'/> M multiplied by Y squared gives M Y squared. 
         Therefore, A M plus M Y squared <bookmark mark='C'/> equals B Y squared."""
         with self.voiceover(text=text) as tracker:
             self.wait_until_bookmark("A")
@@ -777,7 +777,7 @@ class ThirdProject(VoiceoverScene):
             self.wait()
 
         text = """Now, we want to collect the terms containing Y squared on one side. <bookmark mark='A'/> Subtract M Y squared from both sides. 
-                We are left with  <bookmark mark='B'/> eeA M equals B Y squared minus M Y squared."""
+                We are left with  <bookmark mark='B'/> A M equals B Y squared minus M Y squared."""
         with self.voiceover(text=text) as tracker:
             self.wait_until_bookmark("A")
             self.play(TransformFromCopy(eq_group[2], eq_2))
@@ -785,7 +785,7 @@ class ThirdProject(VoiceoverScene):
             self.play(Transform(eq_2, eq_group[3]))
             self.wait()
 
-        text = "Both terms on the right contain <bookmark mark='A'/> Y squared. So, we factor out <bookmark mark='B'/> Y squared. This gives us <bookmark mark='C'/> eeA M equals B minus M, multiplied by Y squared."
+        text = "Both terms on the right contain <bookmark mark='A'/> Y squared. So, we factor out <bookmark mark='B'/> Y squared. This gives us <bookmark mark='C'/> A M equals B minus M, multiplied by Y squared."
         with self.voiceover(text=text) as tracker:
             self.wait_until_bookmark("A")
             self.play(Circumscribe(eq_group[3][2]), Circumscribe(eq_group[3][-1]))
