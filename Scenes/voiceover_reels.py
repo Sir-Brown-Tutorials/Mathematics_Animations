@@ -711,29 +711,7 @@ class ThirdProject(VoiceoverScene):
         eq_3.move_to(eq_group[5])
         eq_4 = MathTex(r"\sqrt{y^2} = \pm \sqrt{\frac{am}{b - m}}")
         eq_4.move_to(eq_group[6])
-        # brace_1 = Brace(eq_group[5][0], DOWN, buff=0.025)
-        # label_1 = (
-        #     brace_1.get_tex(r"\text{Group 1}", buff=0).scale(0.75).set_color(PURE_GREEN)
-        # )
-        # brace_1_group = VGroup(brace_1, label_1)
-        #
-        # brace_2 = Brace(eq_group[5][-1], DOWN, buff=0.025)
-        # label_2 = (
-        #     brace_2.get_tex(r"\text{Group 2}", buff=0).scale(0.75).set_color(PURE_GREEN)
-        # )
-        # brace_2_group = VGroup(brace_2, label_2)
-        # # -----------------------------------------------------------------
-        #
-        # # -----------------------------------------------------------------
-        # rectangle_box_1 = SurroundingRectangle(
-        #     VGroup(
-        #         cast(VMobject, eq_group[2][2]),
-        #         cast(VMobject, eq_group[2][3]),
-        #         cast(VMobject, eq_group[2][4]),
-        #     ),
-        #     buff=0.1,
-        #     color=PURE_YELLOW,
-        # )
+
         rectangle_box_2 = SurroundingRectangle(
             eq_group[6], buff=0.2, color=PURE_RED, corner_radius=0.2
         )
@@ -750,26 +728,6 @@ class ThirdProject(VoiceoverScene):
             angle=-TAU / 4,
             color=PURE_BLUE,
         )
-        # dig_1 = (
-        #     Tex(r"$-5$ and $2$")
-        #     .next_to(eq_group[3], DOWN + 3 * RIGHT)
-        #     .set_color(PURE_YELLOW)
-        # )
-        # # # -----------------------------------------------------------------
-        # #
-        # # # -----------------------------------------------------------------
-        # rectangle_box_3 = SurroundingRectangle(
-        #     eq_group[6][1], buff=0.1, color=PURE_YELLOW
-        # )
-        # rectangle_box_4 = SurroundingRectangle(
-        #     eq_group[6][-1], buff=0.1, color=PURE_YELLOW
-        # )
-        # rectangle_box_5 = SurroundingRectangle(
-        #     eq_group[3][1], buff=0.1, color=PURE_YELLOW
-        # )
-        # rectangle_box_6 = SurroundingRectangle(
-        #     eq_group[2][0], buff=0.1, color=PURE_YELLOW
-        # )
         # -----------------------------------------------------------------
         # Voiceovers and Animations
         # -----------------------------------------------------------------
