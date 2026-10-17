@@ -1,4 +1,3 @@
-from turtle import circle
 from typing import cast, override
 
 from manim import *
