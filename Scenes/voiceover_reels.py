@@ -860,6 +860,228 @@ class ThirdProject(VoiceoverScene):
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
+# FOURTH VOICEOVER REELS PROJECT
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+class FourthProject(VoiceoverScene):
+    @override
+    def construct(self):
+        # self.set_speech_service(RecorderService(device_index=7, rate=48000))
+        # self.set_speech_service(GTTSService(lang="en", transcription_model="small"))
+
+        # -----------------------------------------------------------------
+        # Create a custom Latex template that includes the cancel package
+        # -----------------------------------------------------------------
+        my_template = TexTemplate()
+        my_template.add_to_preamble(r"\usepackage{xcolor}")
+        my_template.add_to_preamble(r"\usepackage{cancel}")
+        my_template.add_to_preamble(r"\renewcommand{\CancelColor}{\color{red}}")
+
+        # -----------------------------------------------------------------
+        # Load and position logo image
+        # -----------------------------------------------------------------
+        logo = ImageMobject("../Images/sir_brown_logo_trans.png")
+        logo_corner = logo.scale(0.15)
+        logo_corner.to_corner(DR, buff=-0.1)
+        self.add(logo_corner)
+
+        # -----------------------------------------------------------------
+        # Problem Statement
+        # -----------------------------------------------------------------
+        problem = Tex(
+            r"Simplify $\frac{3b}{y+b} + \frac{2b}{y-b} - \frac{6b^2}{b^2 - y^2}$",
+        )
+        problem[-1].scale(1.5)
+        title = Tex(
+            r"Simplify $\frac{3b}{y+b} + \frac{2b}{y-b} - \frac{6b^2}{b^2 - y^2}$",
+        )
+        underline = Underline(title)
+        title_group = VGroup(title, underline).to_edge(UP).scale(1.25).set_color(YELLOW)
+
+        # -----------------------------------------------------------------
+        # Equation group
+        # -----------------------------------------------------------------
+        eq_group = VGroup(
+            MathTex(r"\frac{3b}{y+b} + \frac{2b}{y-b} - \frac{6b^2}{b^2 - y^2}"),
+            MathTex(r"\frac{3b}{y+b} + \frac{2b}{y-b} + \frac{6b^2}{(y+b)(y-b)}"),
+            MathTex(r"\frac{3b(y-b) + 2b(y+b) + 6b^2}{(y+b)(y-b)}"),
+            MathTex(r"\frac{3by - 3b^2 + 2by + 2b^2 + 6b^2}{(y+b)(y-b)}"),
+            MathTex(r"\frac{5by + 5b^2}{(y+b)(y-b)}"),
+            MathTex(r"\frac{5b(y+b)}{(y+b)(y-b)}"),
+            MathTex(r"\frac{5b}{y-b}"),
+        ).arrange(DOWN, buff=0.75)
+
+        # -----------------------------------------------------------------
+        # Adding Braces and their labels
+        # -----------------------------------------------------------------
+        # eq_1 = MathTex(
+        #     r"(a + y^2) \times m = \frac{b - k^3}{\cancel{(a + y^2)}} \times \cancel{(a + y^2)}",
+        #     tex_template=my_template,
+        # )
+        # eq_1.move_to(eq_group[1])
+        #
+        # eq_2 = MathTex(r"am + my^2 -", r"my^2", r" = by^2 - ", r"my^2")
+        # eq_2[1].set_color(PURE_BLUE)
+        # eq_2[-1].set_color(PURE_BLUE)
+        # eq_2.move_to(eq_group[3])
+
+        # eq_3 = MathTex(
+        #     r"\frac{am}{b - m} = \frac{\cancel{(b - m)}y^2}{\cancel{(b - m)}}",
+        #     tex_template=my_template,
+        # )
+        # eq_3.move_to(eq_group[5])
+
+        # eq_4 = MathTex(r"\sqrt{y^2} = \pm \sqrt{\frac{am}{b - m}}")
+        # eq_4.move_to(eq_group[6])
+        #
+        rectangle_box_1 = SurroundingRectangle(
+            eq_group[6], buff=0.2, color=PURE_RED, corner_radius=0.2
+        )
+        #
+        # arrow_1 = CurvedArrow(
+        #     eq_group[1][0].get_top(),
+        #     eq_group[1][2].get_top(),
+        #     angle=-TAU / 4,
+        #     color=PURE_GREEN,
+        # )
+        # arrow_2 = CurvedArrow(
+        #     eq_group[1][0].get_top(),
+        #     eq_group[1][4].get_top(),
+        #     angle=-TAU / 4,
+        #     color=PURE_BLUE,
+        # )
+        # # -----------------------------------------------------------------
+        # # Voiceovers and Animations
+        # # -----------------------------------------------------------------
+        # text = "We are given the formula M equals B Y squared divided by A plus Y squared. We want to make Y the subject of the formula."
+        # with self.voiceover(text=text) as tracker:
+        self.play(Write(problem), run_time=2)
+        self.wait()
+        self.play(FadeTransform(problem, title_group))
+        self.wait()
+        self.play(FadeIn(eq_group))
+        self.wait()
+        self.play(Create(rectangle_box_1))
+        self.wait(5)
+        #
+        # text = """First, we need to eliminate the denominator. So, <bookmark mark='A'/> we multiply both sides by A plus Y squared.
+        # This gives us <bookmark mark='B'/> M multiplied by A plus Y squared, equal to B Y squared."""
+        # with self.voiceover(text=text) as tracker:
+        #     self.wait_until_bookmark("A")
+        #     self.play(Write(eq_1))
+        #     self.wait_until_bookmark("B")
+        #     self.play(Transform(eq_1, eq_group[1]))
+        # self.wait()
+        #
+        # text = """Next, we expand the brackets. <bookmark mark='A'/> M multiplied by A gives A M, while <bookmark mark='B'/> M multiplied by Y squared gives M Y squared.
+        # Therefore, A M plus M Y squared <bookmark mark='C'/> equals B Y squared."""
+        # with self.voiceover(text=text) as tracker:
+        #     self.wait_until_bookmark("A")
+        #     self.play(
+        #         Create(arrow_1),
+        #         TransformFromCopy(
+        #             VGroup(
+        #                 cast(VMobject, eq_group[1][0]), cast(VMobject, eq_group[1][2])
+        #             ),
+        #             eq_group[2][0],
+        #         ),
+        #     )
+        #     self.wait_until_bookmark("B")
+        #     self.play(
+        #         Create(arrow_2),
+        #         TransformFromCopy(
+        #             VGroup(
+        #                 cast(VMobject, eq_group[1][0]), cast(VMobject, eq_group[1][4])
+        #             ),
+        #             eq_group[2][1],
+        #         ),
+        #     )
+        #     self.wait_until_bookmark("C")
+        #     self.play(TransformFromCopy(eq_group[1][-1], eq_group[2][-1]))
+        # self.wait()
+        #
+        # text = """Now, we want to collect the terms containing Y squared on one side. <bookmark mark='A'/> Subtract M Y squared from both sides.
+        #         We are left with  <bookmark mark='B'/> A M equals B Y squared minus M Y squared."""
+        # with self.voiceover(text=text) as tracker:
+        #     self.wait_until_bookmark("A")
+        #     self.play(TransformFromCopy(eq_group[2], eq_2))
+        #     self.wait_until_bookmark("B")
+        #     self.play(Transform(eq_2, eq_group[3]))
+        # self.wait()
+        #
+        # text = "Both terms on the right contain <bookmark mark='A'/> Y squared. So, we factor out <bookmark mark='B'/> Y squared. This gives us <bookmark mark='C'/> A M equals B minus M, multiplied by Y squared."
+        # with self.voiceover(text=text) as tracker:
+        #     self.wait_until_bookmark("A")
+        #     self.play(Circumscribe(eq_group[3][2]), Circumscribe(eq_group[3][-1]))
+        #     self.wait_until_bookmark("B")
+        #     self.play(
+        #         TransformFromCopy(
+        #             VGroup(
+        #                 cast(VMobject, eq_group[3][2]), cast(VMobject, eq_group[3][-1])
+        #             ),
+        #             eq_group[4][-1],
+        #         )
+        #     )
+        #     self.play(
+        #         TransformFromCopy(
+        #             VGroup(
+        #                 cast(VMobject, eq_group[3][1]), cast(VMobject, eq_group[3][-2])
+        #             ),
+        #             eq_group[4][1],
+        #         )
+        #     )
+        #     self.wait_until_bookmark("C")
+        #     self.play(TransformFromCopy(eq_group[3][0], eq_group[4][0]))
+        # self.wait()
+        #
+        # text = "To make Y squared the subject, we divide both sides by <bookmark mark='A'/> B minus M. Therefore, <bookmark mark='B'/> Y squared equals A M divided by B minus M."
+        # with self.voiceover(text=text) as tracker:
+        #     self.wait_until_bookmark("A")
+        #     self.play(TransformFromCopy(eq_group[4], eq_3))
+        #     self.wait_until_bookmark("B")
+        #     self.play(Transform(eq_3, eq_group[5]))
+        # self.wait()
+        #
+        # text = """Finally, we take the <bookmark mark='A'/> square root of both sides. Since the square root of a squared quantity can be positive or negative,
+        #    we include the plus or minus sign. Therefore, <bookmark mark='B'/> Y equals plus or minus the square root of A M divided by B minus M."""
+        # with self.voiceover(text=text) as tracker:
+        #     self.wait_until_bookmark("A")
+        #     self.play(TransformFromCopy(eq_group[5], eq_4))
+        #     self.wait_until_bookmark("B")
+        #     self.play(Transform(eq_4, eq_group[6]))
+        #     self.wait()
+        #
+        # self.play(Create(rectangle_box_2))
+        # self.wait()
+        # -----------------------------------------------------------------
+        # Outro
+        # -----------------------------------------------------------------
+        final_text = Tex("Thank you for watching!", color=YELLOW)
+        self.play(
+            Write(final_text),
+            ShrinkToCenter(
+                VGroup(
+                    title_group,
+                    eq_group,
+                    # eq_1,
+                    # eq_2,
+                    # eq_3,
+                    # eq_4,
+                    rectangle_box_1,
+                    # arrow_1,
+                    # arrow_2,
+                )
+            ),
+        )
+        self.wait()
+        self.play(
+            logo_corner.animate.move_to(ORIGIN).scale(3),
+            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
+        )
+        self.wait()
+        self.play(FadeOut(final_text, logo_corner))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
 # Thumbnail
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 class Thumbnail(Scene):
