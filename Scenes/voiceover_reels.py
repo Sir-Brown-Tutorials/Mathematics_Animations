@@ -901,9 +901,12 @@ class FourthProject(VoiceoverScene):
         # Equation group
         # -----------------------------------------------------------------
         eq_group = VGroup(
-            MathTex(r"\frac{3b}{y+b} + \frac{2b}{y-b} - \frac{6b^2}{b^2 - y^2}"),
+            MathTex(
+                r"\frac{3b}{y+b} ",
+                r" \;+ \frac{2b}{y-b}\;",
+                r"- \frac{6b^2}{b^2 - y^2}",
+            ),
             MathTex(r"\frac{3b}{y+b} + \frac{2b}{y-b} + \frac{6b^2}{(y+b)(y-b)}"),
-            MathTex(r"\frac{3b(y-b) + 2b(y+b) + 6b^2}{(y+b)(y-b)}"),
             MathTex(r"\frac{3by - 3b^2 + 2by + 2b^2 + 6b^2}{(y+b)(y-b)}"),
             MathTex(r"\frac{5by + 5b^2}{(y+b)(y-b)}"),
             MathTex(r"\frac{5b(y+b)}{(y+b)(y-b)}"),
@@ -913,29 +916,29 @@ class FourthProject(VoiceoverScene):
         # -----------------------------------------------------------------
         # Adding Braces and their labels
         # -----------------------------------------------------------------
-        # eq_1 = MathTex(
-        #     r"(a + y^2) \times m = \frac{b - k^3}{\cancel{(a + y^2)}} \times \cancel{(a + y^2)}",
-        #     tex_template=my_template,
-        # )
-        # eq_1.move_to(eq_group[1])
-        #
-        # eq_2 = MathTex(r"am + my^2 -", r"my^2", r" = by^2 - ", r"my^2")
-        # eq_2[1].set_color(PURE_BLUE)
-        # eq_2[-1].set_color(PURE_BLUE)
-        # eq_2.move_to(eq_group[3])
+        eq_1 = MathTex(
+            r"-\frac{6b^2}{b^2-y^2} = - \frac{6b^2}{-(y-b)(y+b)} = +\frac{6b^2}{(y-b)(y+b)}"
+        ).scale(0.75)
+        eq_1.move_to(eq_group[1])
 
-        # eq_3 = MathTex(
-        #     r"\frac{am}{b - m} = \frac{\cancel{(b - m)}y^2}{\cancel{(b - m)}}",
-        #     tex_template=my_template,
-        # )
-        # eq_3.move_to(eq_group[5])
+        eq_2 = MathTex(r"\frac{3b(y-b) + 2b(y+b) + 6b^2}{(y+b)(y-b)}")
+        eq_2.move_to(eq_group[2])
+
+        eq_3 = MathTex(
+            r"\frac{5b\cancel{(y+b)}}{\cancel{(y+b)}(y-b)}",
+            tex_template=my_template,
+        )
+        eq_3.move_to(eq_group[4])
 
         # eq_4 = MathTex(r"\sqrt{y^2} = \pm \sqrt{\frac{am}{b - m}}")
         # eq_4.move_to(eq_group[6])
         #
         rectangle_box_1 = SurroundingRectangle(
-            eq_group[6], buff=0.2, color=PURE_RED, corner_radius=0.2
+            eq_group[5], buff=0.2, color=PURE_RED, corner_radius=0.2
         )
+        # rectangle_box_2 = SurroundingRectangle(
+        #     eq_group[0][-1], buff=0.1, color=PURE_YELLOW
+        # )
         #
         # arrow_1 = CurvedArrow(
         #     eq_group[1][0].get_top(),
@@ -955,13 +958,31 @@ class FourthProject(VoiceoverScene):
         # text = "We are given the formula M equals B Y squared divided by A plus Y squared. We want to make Y the subject of the formula."
         # with self.voiceover(text=text) as tracker:
         self.play(Write(problem), run_time=2)
-        self.wait()
+        self.wait(2)
         self.play(FadeTransform(problem, title_group))
-        self.wait()
-        self.play(FadeIn(eq_group))
-        self.wait()
+        self.wait(2)
+        self.play(Write(eq_group[0]))
+        self.wait(2)
+        self.play(Circumscribe(eq_group[0][-1], shape=Rectangle))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[0][-1], eq_1))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_1, eq_group[1]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[1], eq_2))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_2, eq_group[2]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[2], eq_group[3]))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_group[3], eq_group[4]))
+        self.wait(2)
+        self.play(ReplacementTransform(eq_group[4], eq_3))
+        self.wait(2)
+        self.play(TransformFromCopy(eq_3, eq_group[5]))
+        self.wait(2)
         self.play(Create(rectangle_box_1))
-        self.wait(5)
+        self.wait(2)
         #
         # text = """First, we need to eliminate the denominator. So, <bookmark mark='A'/> we multiply both sides by A plus Y squared.
         # This gives us <bookmark mark='B'/> M multiplied by A plus Y squared, equal to B Y squared."""
@@ -1064,21 +1085,19 @@ class FourthProject(VoiceoverScene):
                     eq_group,
                     # eq_1,
                     # eq_2,
-                    # eq_3,
+                    eq_3,
                     # eq_4,
                     rectangle_box_1,
+                    # rectangle_box_2,
                     # arrow_1,
                     # arrow_2,
                 )
             ),
         )
         self.wait()
-        self.play(
-            logo_corner.animate.move_to(ORIGIN).scale(3),
-            final_text.animate.shift(DOWN * 4).set_color(WHITE).scale(1.3),
-        )
+        self.play(logo_corner.animate.move_to(ORIGIN).scale(3), FadeOut(final_text))
         self.wait()
-        self.play(FadeOut(final_text, logo_corner))
+        self.play(ShrinkToCenter(logo_corner))
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
