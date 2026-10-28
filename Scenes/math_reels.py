@@ -13,7 +13,7 @@ config.disable_caching = True
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 # FIRST MATH REEL PROJECT
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
-class FirstMathProject(Scene):
+class FirstMathReel(Scene):
     @override
     def construct(self):
 
@@ -173,17 +173,21 @@ class Thumbnail(Scene):
 
         # Title text
         title = (
-            Text("Solve for", font="Roboto", weight=BOLD, color=YELLOW)
+            Text("Simplify", font="Roboto", weight=BOLD, color=YELLOW)
             .scale(1.5)
-            .to_edge(UP)
+            .shift(UP * 3)
         )
         # Subtitle
-        subtitle = Tex(r"$p$ \text{and} $q$").scale(1.5).next_to(title, DOWN, buff=0.3)
+        subtitle = (
+            Tex(r"\text{the following}").scale(1.5).next_to(title, DOWN, buff=0.3)
+        )
 
         # Formula
         formula = (
-            MathTex(r"\frac{32^4 \times 625^4}{8^6 \times 25^4} = 2^p5^q", color=WHITE)
-            .scale(1.7)
+            MathTex(
+                r"\frac{3b}{y+b} + \frac{2b}{y-b} - \frac{6b^2}{b^2 - y^2}", color=WHITE
+            )
+            .scale(1.5)
             .next_to(subtitle, DOWN, buff=1)
         )
 
